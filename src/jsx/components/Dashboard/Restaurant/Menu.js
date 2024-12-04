@@ -48,7 +48,7 @@ const Menu = () => {
 
         let imageBase64 = null;
         if (fileInput) {
-          const maxFileSize = 8 * 1024 * 1024; // 8MB em bytes
+          const maxFileSize = 8 * 1024 * 1024; // 8MB
           if (fileInput.size > maxFileSize) {
             Alert.showValidationMessage(
               "O arquivo é muito grande. O tamanho máximo permitido é de 8MB."
@@ -192,7 +192,7 @@ const Menu = () => {
               <input
                 type="text"
                 className="form-control p-0"
-                placeholder="Search here"
+                placeholder="Procurar"
               />
             </div>
 
