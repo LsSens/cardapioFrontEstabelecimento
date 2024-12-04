@@ -14,6 +14,11 @@ const MenuCategorySlider = ({ menus, setMenus, setLoading }) => {
   const handleEdit = (menu) => {
     Alert.fire({
       title: "Editar Menu",
+      html: `${menu.menu_image ? `
+              <div class="mt-3 text-center">
+                <img src="${menu.menu_image}" alt="Pré-visualização" style="max-height: 130px" />
+              </div>`
+            : "" }`,
       input: "text",
       inputLabel: "Nome do Menu",
       inputValue: menu.menu_name,
@@ -134,12 +139,30 @@ const MenuCategorySlider = ({ menus, setMenus, setLoading }) => {
                     </Dropdown.Item>
                   </Dropdown.Menu>
                 </Dropdown>
-                <img
-                  className="text-truncate"
-                  src={menu.image || "default-image-path.jpg"}
-                  alt={menu.menu_name}
-                  style={{ width: "55px", height: "55px", objectFit: "cover" }}
-                />
+                {menu.menu_image ? (
+                  <img
+                    className="text-truncate"
+                    src={menu.menu_image}
+                    alt={menu.menu_name}
+                    style={{
+                      width: "80px",
+                      height: "80px",
+                      objectFit: "cover",
+                    }}
+                  />
+                ) : (
+                  <i
+                    className="bi bi-image-fill"
+                    style={{
+                      fontSize: "80px",
+                      display: "block",
+                      textAlign: "center",
+                      lineHeight: "80px",
+                      color: "#ccc",
+                    }}
+                    title={menu.menu_name}
+                  ></i>
+                )}
                 <h6
                   className="mb-0 font-w500 text-truncate text-capitalize"
                   title={menu.menu_name}

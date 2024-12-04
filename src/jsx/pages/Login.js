@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { connect, useDispatch } from "react-redux";
+import { connect, useDispatch, useSelector } from "react-redux";
 import { NavLink, useNavigate } from "react-router-dom";
 import {
   loadingToggleAction,
@@ -13,13 +13,16 @@ import bgimage from "../../images/login-img/pic-5.jpg";
 
 function Login(props) {
   const navigate = useNavigate();
-  const [email, setEmail] = useState("");
-  let errorsObj = { email: "", password: "" };
-  const [errors, setErrors] = useState(errorsObj);
-  const [password, setPassword] = useState("");
   const dispatch = useDispatch();
 
-  function onLogin(e) {
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+
+  let errorsObj = { email: "", password: "" };
+  const [errors, setErrors] = useState(errorsObj);
+  const loading = useSelector((state) => state.auth.showLoading);
+
+  async function onLogin(e) {
     e.preventDefault();
     let error = false;
     const errorObj = { ...errorsObj };
@@ -39,14 +42,6 @@ function Login(props) {
     dispatch(loadingToggleAction(true));
 
     dispatch(loginAction(email, password, navigate));
-
-    /* dispatch(loginAction(email, password, props.history)).then((result) => {
-			if(typeof(result) != 'undefined' && result != null && result.registered == true){
-				navigate('/dashboard');
-			}
-		}); */
-
-    //navigate('/dashboard');
   }
 
   return (
@@ -135,31 +130,13 @@ function Login(props) {
                       <div className="text-center">
                         <button
                           type="submit"
+                          disabled={loading}
                           className="btn btn-primary btn-block"
                         >
                           Cadastrar
                         </button>
                       </div>
                     </form>
-                    <div className="text-center my-3">
-                      <span className="dlab-sign-up style-1">
-                        Continue With
-                      </span>
-                    </div>
-                    <div className="mb-3 dlab-signup-icon">
-                      <button className="btn btn-outline-light me-1">
-                        <i className="fa-brands fa-facebook me-2 facebook"></i>
-                        Facebook
-                      </button>
-                      <button className="btn btn-outline-light me-1">
-                        <i className="fa-brands fa-google me-2 google"></i>
-                        Google
-                      </button>
-                      <button className="btn btn-outline-light mt-lg-0 mt-md-1 mt-sm-0 mt-1 linked-btn">
-                        <i className="fa-brands fa-linkedin me-2 likedin"></i>
-                        linkedin
-                      </button>
-                    </div>
                     <div className="text-center">
                       <span>
                         Não tem conta?{" "}
@@ -187,4 +164,5 @@ const mapStateToProps = (state) => {
     showLoading: state.auth.showLoading,
   };
 };
+
 export default connect(mapStateToProps)(Login);

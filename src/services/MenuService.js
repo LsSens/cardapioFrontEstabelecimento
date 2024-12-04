@@ -4,8 +4,8 @@ export function getMenus() {
   return api.get(`/menu`);
 }
 
-export function addMenu(menu_name) {
-  return api.post(`/menu`, { menu_name });
+export function addMenu(menu_name, image) {
+  return api.post(`/menu`, { menu_name, image });
 }
 
 export function editMenu(menu_id, menu_name) {

@@ -1,6 +1,5 @@
-import React, { useEffect, useReducer, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
-import { Modal } from "react-bootstrap";
 import Skeleton from "react-loading-skeleton";
 import "react-loading-skeleton/dist/skeleton.css";
 import MenuCategorySlider from "./MenuCategorySlider";
@@ -10,29 +9,103 @@ import PromoSlider from "./PromoSlider";
 import { addMenu, getMenus } from "../../../../services/MenuService";
 import Alert from "sweetalert2";
 
-//const init =  false;
-function reducer(state, action) {
-  switch (action.type) {
-    case "addMenu":
-      return { ...state, addMenu: !state.addMenu };
-    default:
-      return state;
-  }
-}
-
 const Menu = () => {
-  const initialState = { addMenu: false };
-  const [state, dispatch] = useReducer(reducer, initialState);
   const [menus, setMenus] = useState([]);
-  const [menuName, setMenuName] = useState("");
   const [loading, setLoading] = useState(false);
   const hasFetched = React.useRef(false);
 
-  const addNewMenu = async () => {
-    if (!menuName) return;
+  const handleAddMenu = () => {
+    Alert.fire({
+      title: "Adicionar categoria",
+      html: `
+        <form id="addCategoryForm">
+          <div class="mb-3">
+            <label for="modalInputText" class="form-label">Nome da categoria</label>
+            <input type="text" id="modalInputText" class="form-control" value="" />
+          </div>
+          <div class="mb-3">
+            <label for="modalInputFile" class="form-label">
+              Imagem da categoria <span style="font-size: 10px;">(Recomendado: 80x80px)</span>
+            </label>
+            <input type="file" id="modalInputFile" class="form-control" accept="image/jpeg, image/png, image/gif, image/apng, image/tiff" />
+            <div id="imagePreviewContainer" class="mt-3 text-center"></div>
+          </div>
+        </form>
+      `,
+      showCancelButton: true,
+      confirmButtonText: "Adicionar",
+      cancelButtonText: "Fechar",
+      preConfirm: async () => {
+        const nameInput = document
+          .getElementById("modalInputText")
+          .value.trim();
+        const fileInput = document.getElementById("modalInputFile").files[0];
+
+        if (!nameInput) {
+          Alert.showValidationMessage("O nome da categoria é obrigatório.");
+          return false;
+        }
+
+        let imageBase64 = null;
+        if (fileInput) {
+          const maxFileSize = 8 * 1024 * 1024; // 8MB em bytes
+          if (fileInput.size > maxFileSize) {
+            Alert.showValidationMessage(
+              "O arquivo é muito grande. O tamanho máximo permitido é de 8MB."
+            );
+            return false;
+          }
+
+          imageBase64 = await handleImageUpload(fileInput);
+        }
+
+        return { nameInput, imageBase64 };
+      },
+      didOpen: () => {
+        document
+          .getElementById("modalInputFile")
+          .addEventListener("change", (e) => {
+            const file = e.target.files[0];
+            if (file) {
+              const reader = new FileReader();
+              reader.onload = (event) => {
+                const previewContainer = document.getElementById(
+                  "imagePreviewContainer"
+                );
+                previewContainer.innerHTML = `
+                <img src="${event.target.result}" alt="Pré-visualização" style="max-width: 100%; max-height: 200px; border-radius: 8px; object-fit: cover; box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);" />
+              `;
+              };
+              reader.readAsDataURL(file);
+            }
+          });
+      },
+    }).then(async (result) => {
+      if (result.isConfirmed) {
+        const { nameInput, imageBase64 } = result.value;
+
+        addNewMenu(nameInput, imageBase64);
+      }
+    });
+  };
+
+  const handleImageUpload = (file) => {
+    return new Promise((resolve, reject) => {
+      const reader = new FileReader();
+      reader.onloadend = () => {
+        resolve(reader.result);
+      };
+      reader.onerror = (error) => {
+        reject(error);
+      };
+      reader.readAsDataURL(file);
+    });
+  };
+
+  const addNewMenu = async (name, image) => {
     setLoading(true);
     try {
-      await addMenu(menuName).then(async (response) => {
+      await addMenu(name, image).then(async (response) => {
         getMenus().then(async (response) => {
           setMenus(response.data);
         });
@@ -51,8 +124,6 @@ const Menu = () => {
         confirmButtonText: "Ok",
       });
     } finally {
-      setMenuName("");
-      dispatch({ type: "addMenu" });
       setLoading(false);
     }
   };
@@ -128,7 +199,7 @@ const Menu = () => {
             <button
               type="button"
               className="btn btn-primary mt-3 mt-sm-0"
-              onClick={() => dispatch({ type: "addMenu" })}
+              onClick={() => handleAddMenu()}
             >
               Nova categoria
             </button>
@@ -173,56 +244,6 @@ const Menu = () => {
           <PromoSlider />
         </div>
       </div>
-
-      <Modal
-        className="modal fade"
-        show={state.addMenu}
-        onHide={() => dispatch({ type: "addMenu" })}
-      >
-        <div className="modal-header">
-          <h5 className="modal-title" id="modalModalLabel">
-            Adicionar categoria
-          </h5>
-          <button
-            type="button"
-            className="btn-close"
-            onClick={() => dispatch({ type: "addMenu" })}
-          ></button>
-        </div>
-        <div className="modal-body">
-          <form>
-            <div className="modal-inside">
-              <label for="modalInputText" className="form-label">
-                Nome da categoria
-              </label>
-              <input
-                type="text"
-                className="form-control"
-                id="modalInputText"
-                placeholder=""
-                value={menuName}
-                onChange={(e) => setMenuName(e.target.value)}
-              />
-            </div>
-          </form>
-        </div>
-        <div className="modal-footer">
-          <button
-            type="button"
-            className="btn btn-secondary"
-            onClick={() => dispatch({ type: "addMenu" })}
-          >
-            Close
-          </button>
-          <button
-            type="button"
-            className="btn btn-primary"
-            onClick={addNewMenu}
-          >
-            Adicionar
-          </button>
-        </div>
-      </Modal>
     </>
   );
 };
