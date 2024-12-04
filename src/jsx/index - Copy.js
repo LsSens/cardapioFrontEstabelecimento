@@ -1,3 +1,5 @@
+/* eslint-disable no-unused-vars */
+/* eslint-disable no-unreachable */
 import React, { useContext } from "react";
 
 /// React router dom

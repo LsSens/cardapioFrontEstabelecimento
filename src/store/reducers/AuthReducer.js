@@ -10,7 +10,7 @@ import {
 const initialState = {
     auth: {
         email: '',
-        idToken: '',
+        token: '',
         localId: '',
         expiresIn: '',
         refreshToken: '',
@@ -26,7 +26,7 @@ export function AuthReducer(state = initialState, action) {
             ...state,
             auth: action.payload,
             errorMessage: '',
-            successMessage: 'Signup Successfully Completed',
+            successMessage: 'Cadastro realizado com sucesso',
             showLoading: false,
         };
     }
@@ -35,7 +35,7 @@ export function AuthReducer(state = initialState, action) {
             ...state,
             auth: action.payload,
             errorMessage: '',
-            successMessage: 'Login Successfully Completed',
+            successMessage: 'Login realizado com sucesso',
             showLoading: false,
         };
     }
@@ -47,7 +47,7 @@ export function AuthReducer(state = initialState, action) {
             successMessage: '',
             auth: {
                 email: '',
-                idToken: '',
+                token: '',
                 localId: '',
                 expiresIn: '',
                 refreshToken: '',
