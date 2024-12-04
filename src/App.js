@@ -42,7 +42,7 @@ function App(props) {
   const navigate = useNavigate();
   useEffect(() => {
     checkAutoLogin(dispatch, navigate);
-  }, []);
+  }, [dispatch, navigate]);
 
   let routeblog = (
     <Routes>
