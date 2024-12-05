@@ -5,12 +5,13 @@ import "react-loading-skeleton/dist/skeleton.css";
 import MenuCategorySlider from "./MenuCategorySlider";
 import MenuPopularSlider from "./MenuPopularSlider";
 import BestSellerSlider from "./BestSellerSlider";
-import PromoSlider from "./PromoSlider";
 import { addMenu, getMenus } from "../../../../services/MenuService";
 import Alert from "sweetalert2";
+import { getItems } from "../../../../services/ItemsService";
 
 const Menu = () => {
   const [menus, setMenus] = useState([]);
+  const [items, setItems] = useState([]);
   const [loading, setLoading] = useState(false);
   const hasFetched = React.useRef(false);
 
@@ -134,8 +135,11 @@ const Menu = () => {
       const fetchData = async () => {
         await getMenus().then(async (response) => {
           setMenus(response.data);
-          setLoading(false);
         });
+        await getItems().then(async (response) => {
+          setItems(response.data);
+        });
+        setLoading(false);
       };
       fetchData();
       hasFetched.current = true;
@@ -207,7 +211,7 @@ const Menu = () => {
           <div className="d-flex align-items-center justify-content-between mb-2">
             <h4 className="mb-0 cate-title">Categorias</h4>
             <Link to={"/favorite-menu"} className="text-primary">
-              View all <i className="fa-solid fa-angle-right ms-2"></i>
+              Ver todas <i className="fa-solid fa-angle-right ms-2"></i>
             </Link>
           </div>
           <MenuCategorySlider
@@ -217,31 +221,16 @@ const Menu = () => {
           />
         </div>
         <div className="col-xl-12">
-          <div className="d-flex align-items-center justify-content-between mb-2 mt-sm-0 mt-3">
-            <h4 className=" mb-0 cate-title">Popular This Week</h4>
-            <Link to={"/favorite-menu"} className="text-primary">
-              View all <i className="fa-solid fa-angle-right ms-2"></i>
-            </Link>
-          </div>
-          <MenuPopularSlider />
+          <MenuPopularSlider menus={menus} />
         </div>
         <div className="col-xl-12">
           <div className="d-flex align-items-center justify-content-between mb-2 mt-sm-0 mt-3">
-            <h4 className=" mb-0 cate-title">Best Seller</h4>
+            <h4 className=" mb-0 cate-title">Seus produtos</h4>
             <Link to={"/favorite-menu"} className="text-primary">
-              View all <i className="fa-solid fa-angle-right ms-2"></i>
+              Ver todos <i className="fa-solid fa-angle-right ms-2"></i>
             </Link>
           </div>
-          <BestSellerSlider />
-        </div>
-        <div className="col-xl-12">
-          <div className="d-flex align-items-center justify-content-between mb-2">
-            <h4 className=" mb-0 cate-title">Promo</h4>
-            <Link to={"/favorite-menu"} className="text-primary">
-              View all <i className="fa-solid fa-angle-right ms-2"></i>
-            </Link>
-          </div>
-          <PromoSlider />
+          <BestSellerSlider items={items} />
         </div>
       </div>
     </>
