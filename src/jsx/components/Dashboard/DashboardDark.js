@@ -70,22 +70,22 @@ const DashboardDark = () => {
 
 						<div className="col-xl-12">
 							<div className="d-flex align-items-center justify-content-between mb-2 gap">
-								<h4 className=" mb-0 cate-title">Category</h4>
-								<Link to="/favorite-menu" className="text-primary">View all <i className="fa-solid fa-angle-right ms-2"></i></Link>
+								<h4 className=" mb-0 cate-title">Categoria</h4>
+								<Link to="/favorite-menu" className="text-primary">Ver tudo <i className="fa-solid fa-angle-right ms-2"></i></Link>
 							</div>
 							<CategorySlider />
 						</div>	
 						<div className="col-xl-12">
 							<div className="d-flex align-items-center justify-content-between mb-2">
 								<h4 className=" mb-0 cate-title">Popular Dishes</h4>
-								<Link to="/favorite-menu" className="text-primary">View all <i className="fa-solid fa-angle-right ms-2"></i></Link>
+								<Link to="/favorite-menu" className="text-primary">Ver tudo <i className="fa-solid fa-angle-right ms-2"></i></Link>
 							</div>
 							<PopularDishesSlider />
 						</div>
 						<div className="col-xl-12">
 							<div className="d-flex align-items-center justify-content-between mb-2">
 								<h4 className=" mb-0 cate-title">Recent Order</h4>
-								<Link to="/favorite-menu" className="text-primary">View all <i className="fa-solid fa-angle-right ms-2"></i></Link>
+								<Link to="/favorite-menu" className="text-primary">Ver tudo <i className="fa-solid fa-angle-right ms-2"></i></Link>
 							</div>
 							<RecentOrderSlider />
 						</div>

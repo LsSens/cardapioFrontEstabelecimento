@@ -1,20 +1,30 @@
 import React from "react";
 import { Swiper, SwiperSlide } from "swiper/react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { Dropdown } from "react-bootstrap";
 import { Autoplay } from "swiper";
 import "swiper/css";
+import { useDispatch } from "react-redux";
+import { redirectToMenuAction } from "../../../../store/actions/MenuActions";
 
 const MenuPopularSlider = ({ menus }) => {
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+
+  const redirectToCategory = (menu) => {
+    dispatch(redirectToMenuAction(menu))
+    navigate("/menu/"+menu.menu_id);
+  }
+
   return (
     <>
-      {menus.filter((menu) => menu.items && menu.items.length > 0).map((menu) => (
+      {menus.map((menu) => (
         <div key={menu.menu_id}>
           <div className="d-flex align-items-center justify-content-between mb-2 mt-sm-0 mt-3">
-            <h4 className="mb-0 cate-title">{menu.menu_name}</h4>
-            <Link to={"/favorite-menu"} className="text-primary">
-              Ver todos <i className="fa-solid fa-angle-right ms-2"></i>
-            </Link>
+            <h5 className="mb-0 cate-title">{menu.menu_name}</h5>
+            <span onClick={() => redirectToCategory(menu)} className="text-primary cursor-pointer">
+              Ver tudo<i className="fa-solid fa-angle-right ms-2"></i>
+            </span>
           </div>
           <Swiper
             className="mySwiper-3"
@@ -52,9 +62,9 @@ const MenuPopularSlider = ({ menus }) => {
               },
             }}
           >
-            {menu.items.map((item) => (
+            {menu.items.length ? menu.items.map((item) => (
               <SwiperSlide key={item.item_id}>
-                <div className="card b-hover">
+                <div className="card b-hover mb-2">
                   <div className="card-body p-3">
                     <div className="menu-bx">
                       <div className="d-flex align-items-start">
@@ -152,8 +162,11 @@ const MenuPopularSlider = ({ menus }) => {
                   </div>
                 </div>
               </SwiperSlide>
-            ))}
+            )) : (
+              <p className="mb-1">Essa categoria não há produtos vinculados.</p>
+            )}
           </Swiper>
+          <hr/>
         </div>
       ))}
     </>

@@ -175,6 +175,7 @@ const Menu = () => {
     <>
       <div className="row">
         <div className="col-xl-12">
+          <h2>Categorias</h2>
           <div className="d-flex align-items-center justify-content-between mb-4 flex-wrap">
             <div className="input-group search-area2">
               <span className="input-group-text p-0">
@@ -199,7 +200,6 @@ const Menu = () => {
                 placeholder="Procurar"
               />
             </div>
-
             <button
               type="button"
               className="btn btn-primary mt-3 mt-sm-0"
@@ -208,8 +208,8 @@ const Menu = () => {
               Nova categoria
             </button>
           </div>
-          <div className="d-flex align-items-center justify-content-between mb-2">
-            <h4 className="mb-0 cate-title">Categorias</h4>
+          {/* <div className="d-flex align-items-center justify-content-between mb-2">
+            <h4 className="mb-0 cate-title">Categoria</h4>
             <Link to={"/favorite-menu"} className="text-primary">
               Ver todas <i className="fa-solid fa-angle-right ms-2"></i>
             </Link>
@@ -218,12 +218,12 @@ const Menu = () => {
             menus={menus}
             setMenus={setMenus}
             setLoading={setLoading}
-          />
+          /> */}
         </div>
         <div className="col-xl-12">
           <MenuPopularSlider menus={menus} />
         </div>
-        <div className="col-xl-12">
+        {/* <div className="col-xl-12">
           <div className="d-flex align-items-center justify-content-between mb-2 mt-sm-0 mt-3">
             <h4 className=" mb-0 cate-title">Seus produtos</h4>
             <Link to={"/favorite-menu"} className="text-primary">
@@ -231,7 +231,7 @@ const Menu = () => {
             </Link>
           </div>
           <BestSellerSlider items={items} />
-        </div>
+        </div> */}
       </div>
     </>
   );

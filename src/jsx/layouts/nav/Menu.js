@@ -1,51 +1,51 @@
 export const MenuList = [
     //Dashboard
-    {
-        title: 'Menus',	
-        classsChange: 'mm-collapse',		
-        iconStyle: "bi bi-grid",
-        content: [
+    // {
+    //     title: 'Menus',	
+    //     classsChange: 'mm-collapse',		
+    //     iconStyle: "bi bi-grid",
+    //     content: [
             
-            {
-                title: 'Página principal',
-                to: 'dashboard',					
-            },
-            // {
-            //     title: 'Dashboard Dark',
-            //     to: 'dashboard-dark',
+    //         {
+    //             title: 'Página principal',
+    //             to: 'dashboard',					
+    //         },
+    //         // {
+    //         //     title: 'Dashboard Dark',
+    //         //     to: 'dashboard-dark',
                 
-            // },
-            // {
-            //     title: 'Meus pedidos',
-            //     to: 'food-order',
-            // },
-            {
-                title: 'Itens favoritos',
-                to: 'favorite-menu',
-            },
-            // {
-            //     title: 'Message',
-            //     to: 'message',
-            // },
-            {
-                title: 'Histórico de pedidos',
-                to: 'order-history',
+    //         // },
+    //         // {
+    //         //     title: 'Meus pedidos',
+    //         //     to: 'food-order',
+    //         // },
+    //         {
+    //             title: 'Itens favoritos',
+    //             to: 'favorite-menu',
+    //         },
+    //         // {
+    //         //     title: 'Message',
+    //         //     to: 'message',
+    //         // },
+    //         {
+    //             title: 'Histórico de pedidos',
+    //             to: 'order-history',
                 
-            },
-            // {
-            //     title: 'Notification',
-            //     to: 'notification',
-            // },
-            // {
-            //     title: 'Bill',
-            //     to: 'bill',
-            // },
-            {
-                title: 'Minha conta',
-                to: 'setting',
-            },
-        ],
-    },
+    //         },
+    //         // {
+    //         //     title: 'Notification',
+    //         //     to: 'notification',
+    //         // },
+    //         // {
+    //         //     title: 'Bill',
+    //         //     to: 'bill',
+    //         // },
+    //         {
+    //             title: 'Minha conta',
+    //             to: 'setting',
+    //         },
+    //     ],
+    // },
     //Restaurant
     {
         title: 'Configurações',
@@ -53,15 +53,15 @@ export const MenuList = [
         iconStyle: "bi bi-shop-window",
         content: [
             {
-                title: 'Restaurant',
+                title: 'Meu restaurante',
                 to: 'restaurant',
             },
             {
-                title: 'Menu',
+                title: 'Categorias',
                 to: 'menu',
             },
             {
-                title: 'Orders',
+                title: 'Pedidos',
                 to: 'orders',
             },
             {
@@ -71,25 +71,25 @@ export const MenuList = [
         ]
     },
     //Drivers
-    {
-        title: 'Entregadores',
-        classsChange: 'mm-collapse',
-        iconStyle: "bi bi-bicycle",
-        content: [
-            {
-                title:'Dashboard',
-                to: 'deliver-main'
-            },
-            {
-                title:'Pedidos',
-                to: 'deliver-order'
-            },
-            {
-                title:'Feedback',
-                to: 'feedback'
-            },
-        ],
-    },
+    // {
+    //     title: 'Entregadores',
+    //     classsChange: 'mm-collapse',
+    //     iconStyle: "bi bi-bicycle",
+    //     content: [
+    //         {
+    //             title:'Dashboard',
+    //             to: 'deliver-main'
+    //         },
+    //         {
+    //             title:'Pedidos',
+    //             to: 'deliver-order'
+    //         },
+    //         {
+    //             title:'Feedback',
+    //             to: 'feedback'
+    //         },
+    //     ],
+    // },
     // {
     //     title: 'Other',
     //     classsChange: 'menu-title'
