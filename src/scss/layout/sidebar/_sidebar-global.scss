@@ -2,7 +2,7 @@
 // Nav Profile
 ///////////////////////////
 :root{
-	--space-right: 18.75rem;
+	--space-right: 22rem;
 	
 	[data-layout="horizontal"][data-sidebar-style="full"][data-container="wide"]{
 		--space-right: 3.75rem;
@@ -150,7 +150,7 @@
 // Sidebar
 //////////////
 .dlabnav {
-    width: var(--space-right);
+    width: 21rem;
     padding-bottom: 0;
     height: calc(100% - 5rem);
     position: absolute;

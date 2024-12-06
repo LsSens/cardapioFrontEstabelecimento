@@ -11771,7 +11771,7 @@ html[dir="rtl"] [direction="rtl"][data-sidebar-style="compact"]:not([data-layout
     transform: rotate(0); } }
 
 .dlabnav {
-  width: var(--space-right);
+  width: 21rem;
   padding-bottom: 0;
   height: calc(100% - 5rem);
   position: absolute;
