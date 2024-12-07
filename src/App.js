@@ -40,6 +40,7 @@ function withRouter(Component) {
 function App(props) {
   const dispatch = useDispatch();
   const navigate = useNavigate();
+
   useEffect(() => {
     checkAutoLogin(dispatch, navigate);
   }, [dispatch, navigate]);
@@ -47,7 +48,7 @@ function App(props) {
   let routeblog = (
     <Routes>
       <Route path="/login" element={<Login />} />
-      <Route path="/page-register" element={<SignUp />} />
+      <Route path="/register" element={<SignUp />} />
       <Route path="/page-forgot-password" element={<ForgotPassword />} />
     </Routes>
   );

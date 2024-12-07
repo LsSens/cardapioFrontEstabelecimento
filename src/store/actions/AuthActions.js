@@ -15,17 +15,17 @@ export const LOGIN_FAILED_ACTION = "[login action] failed login";
 export const LOADING_TOGGLE_ACTION = "[Loading action] toggle loading";
 export const LOGOUT_ACTION = "[Logout action] logout action";
 
-export function signupAction(email, password, navigate) {
+export function signupAction(data, navigate) {
   return (dispatch) => {
-    signUp(email, password)
+    signUp(data)
       .then((response) => {
         saveTokenInLocalStorage(response.data);
-        runLogoutTimer(dispatch, response.data.expiresIn * 1000);
+        runLogoutTimer(dispatch, response.data.expiresIn * 1000, navigate);
         dispatch(confirmedSignupAction(response.data));
         navigate("/dashboard");
       })
       .catch((error) => {
-        const errorMessage = formatError(error.response.data);
+        const errorMessage = formatError(error.response.data || 'erro');
         dispatch(signupFailedAction(errorMessage));
       });
   };

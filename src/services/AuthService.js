@@ -1,19 +1,16 @@
-import axios from "axios";
 import swal from "sweetalert";
 import { loginConfirmedAction, Logout } from "../store/actions/AuthActions";
 import api from "./Api";
 
-export function signUp(email, password) {
-  //axios call
+export function signUp(data) {
   const postData = {
-    email,
-    password,
-    returnSecureToken: true,
+    email: data.email,
+    password: data.password,
+    name: data.name,
+    phone: data.phone,
+    company: data.company,
   };
-  return axios.post(
-    `https://identitytoolkit.googleapis.com/v1/accounts:signUp?key=AIzaSyD3RPAp3nuETDn9OQimqn_YF6zdzqWITII`,
-    postData
-  );
+  return api.post(`/auth/register`, postData);
 }
 
 export function login(email, password) {
@@ -63,6 +60,12 @@ export function runLogoutTimer(dispatch, timer, navigate) {
 export function checkAutoLogin(dispatch, navigate) {
   const tokenDetailsString = localStorage.getItem("userDetails");
   let tokenDetails = "";
+  const currentPath = window.location.pathname;
+
+  if (currentPath === "/register") {
+    return;
+  }
+
   if (!tokenDetailsString) {
     dispatch(Logout(navigate));
     return;

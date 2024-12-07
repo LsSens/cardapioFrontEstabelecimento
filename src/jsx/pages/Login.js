@@ -140,7 +140,7 @@ function Login(props) {
                     <div className="text-center">
                       <span>
                         Não tem conta?{" "}
-                        <NavLink to="/page-register" className="text-primary">
+                        <NavLink to="/register" className="text-primary">
                           {" "}
                           Cadastrar
                         </NavLink>
