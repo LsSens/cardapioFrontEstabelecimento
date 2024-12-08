@@ -15,8 +15,8 @@ function Login(props) {
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
+  const [email, setEmail] = useState("admin@company.com");
+  const [password, setPassword] = useState("senha123");
 
   let errorsObj = { email: "", password: "" };
   const [errors, setErrors] = useState(errorsObj);
@@ -133,7 +133,7 @@ function Login(props) {
                           disabled={loading}
                           className="btn btn-primary btn-block"
                         >
-                          Cadastrar
+                          Entrar
                         </button>
                       </div>
                     </form>

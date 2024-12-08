@@ -61,6 +61,10 @@ export const MenuList = [
                 to: 'menu',
             },
             {
+                title: 'Produtos',
+                to: 'products',
+            },
+            {
                 title: 'Pedidos',
                 to: 'orders',
             },

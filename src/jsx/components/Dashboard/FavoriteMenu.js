@@ -3,64 +3,62 @@ import { Link, useParams } from "react-router-dom";
 import { Tab, Nav } from "react-bootstrap";
 
 import MenuList from "./Favorite/MenuList";
-
-import pic3 from "./../../../images/popular-img/pic-3.jpg";
-import pic1 from "./../../../images/popular-img/pic-1.jpg";
-import pic2 from "./../../../images/popular-img/pic-2.jpg";
-import pic4 from "./../../../images/popular-img/pic-4.jpg";
-import { getMenuItemsById } from "../../../services/MenuService";
 import { useSelector } from "react-redux";
-
-const gridBlog = [
-  {
-    id: "1",
-    image: pic3,
-    title: "Mushroom Burger",
-    heart: false,
-    check: false,
-  },
-  { id: "2", image: pic1, title: "Bean Burger", heart: false, check: false },
-  { id: "3", image: pic2, title: "Lamb Burger", heart: false, check: false },
-  { id: "4", image: pic4, title: "Potato Burger", heart: false, check: false },
-  { id: "5", image: pic1, title: "Veggie Burger", heart: false, check: false },
-  { id: "6", image: pic2, title: "Pizza Burger", heart: false, check: false },
-  { id: "7", image: pic4, title: "Corn Burger", heart: false, check: false },
-  { id: "8", image: pic3, title: "Chees Burger", heart: false, check: false },
-];
+import { getMenuItemsById } from "./../../../services/MenuService";
+import Skeleton from "react-loading-skeleton";
+import { useRef } from "react";
 
 const FavoriteMenu = () => {
-  const activeMenu = useSelector(state => state.menu.activeMenu)
+  const activeMenu = useSelector((state) => state.menu.activeMenu);
+  const [menuItems, setMenuItems] = useState({ items: [] });
+  const [loading, setLoading] = useState(false);
+  const requestInProgress = useRef(false);
   const { id } = useParams();
-  const [dataheart, setDataheart] = useState(gridBlog);
   function handleClick(type, id) {
-    let temp = dataheart.map((data) => {
-      if (id === data.id) {
-        if (type === "heart") {
-          return { ...data, heart: !data.heart };
-        } else if (type === "check") {
-          return { ...data, check: !data.check };
-        }
-      }
-      return data;
-    });
-    setDataheart(temp);
+    //   let temp = dataheart.map((data) => {
+    //     if (id === data.id) {
+    //       if (type === "heart") {
+    //         return { ...data, heart: !data.heart };
+    //       } else if (type === "check") {
+    //         return { ...data, check: !data.check };
+    //       }
+    //     }
+    //     return data;
+    //   });
+    //   setDataheart(temp);
   }
 
   const getProductsById = async () => {
-    const items = await getMenuItemsById(id)
-    console.log(`getProductsById ~ items:`, items)
-  }
+    setLoading(true);
+    if (requestInProgress.current) return;
+    requestInProgress.current = true;
+    await getMenuItemsById(id)
+      .then((response) => {
+        setMenuItems({ items: response.data.items, ...response.data });
+      })
+      .finally(() => {
+        setLoading(false);
+        requestInProgress.current = false;
+      });
+  };
 
   useEffect(() => {
-    getProductsById()
-  }, [id])
+    getProductsById();
+  }, [id]);
 
   return (
     <>
       <Tab.Container defaultActiveKey="Grid">
         <div className="d-flex align-items-center justify-content-between mb-2">
-          <h3>{activeMenu?.menu_name}</h3>
-          <Link to={"/menu"} className="btn btn-primary btn-sm">Voltar</Link>
+          <h3>{activeMenu ? activeMenu?.menu_name : menuItems?.menu_name}</h3>
+          <h3>{activeMenu ? activeMenu?.menu_image : menuItems?.menu_image}</h3>
+          <Link
+            to={"/menu"}
+            className="btn btn-primary btn-sm d-flex gap-2 align-items-center"
+          >
+            <i className="la la-angle-left mr-2"></i>
+            Voltar
+          </Link>
         </div>
         <div className="d-flex align-items-center justify-content-between mb-4">
           <div className="input-group search-area2 style-1">
@@ -155,150 +153,175 @@ const FavoriteMenu = () => {
             <MenuList />
           </Tab.Pane>
           <Tab.Pane eventKey="Grid">
-            <div className="row">
-              {activeMenu?.items.map((item, ind) => (
-                <>
-                  {/* {JSON.stringify(item)} */}
-                <div className="col-xl-3 col-xxl-4 col-sm-6" key={ind}>
-                  <div className="card dishe-bx b-hover style-1">
-                    <i
-                      className={`fa-solid fa-heart ms-auto c-heart c-pointer ${
-                        item.heart ? "active" : ""
-                      }`}
-                      onClick={() => handleClick("heart", item.id)}
-                    ></i>
-                    <div className="card-body pb-0 pt-3">
-                      <div className="text-center mb-2">
-                        
-                      {item.image ? (
-                          <img
-                            className="text-truncate"
-                            src={item.image}
-                            alt={item.name}
-                            style={{
-                              width: "60px",
-                              height: "60px",
-                              objectFit: "cover",
-                              borderRadius: "8px",
-                              paddingRight: "8px",
-                            }}
-                          />
-                        ) : (
-                          <i
-                            className="bi bi-image-fill"
-                            style={{
-                              fontSize: "60px",
-                              display: "block",
-                              textAlign: "center",
-                              lineHeight: "60px",
-                              color: "#ccc",
-                              paddingRight: "8px",
-                            }}
-                            title={item.name}
-                          ></i>
-                        )}
-                      </div>
-                      <div className="border-bottom pb-3">
-                        <h4 className="font-w500 mb-1">{item.name}</h4>
-                        <div className="d-flex align-items-center">
-                          <svg
-                            width="16"
-                            height="15"
-                            viewBox="0 0 16 15"
-                            fill="none"
-                            xmlns="http://www.w3.org/2000/svg"
-                          >
-                            <path
-                              d="M8 0.500031L9.79611 6.02789H15.6085L10.9062 9.4443L12.7023 14.9722L8 11.5558L3.29772 14.9722L5.09383 9.4443L0.391548 6.02789H6.20389L8 0.500031Z"
-                              fill="#FC8019"
-                            />
-                          </svg>
-                          <p className="font-w500 mb-0 px-2">5</p>
-                          <svg
-                            className="me-2"
-                            width="4"
-                            height="5"
-                            viewBox="0 0 4 5"
-                            fill="none"
-                            xmlns="http://www.w3.org/2000/svg"
-                          >
-                            <circle cx="2" cy="2.50003" r="2" fill="#C4C4C4" />
-                          </svg>
-                          <p className=" font-w500 mb-0">1k+ Reviews</p>
-                          <svg
-                            className="mx-2"
-                            width="4"
-                            height="5"
-                            viewBox="0 0 4 5"
-                            fill="none"
-                            xmlns="http://www.w3.org/2000/svg"
-                          >
-                            <circle cx="2" cy="2.5" r="2" fill="#C4C4C4" />
-                          </svg>
-                          <p className="font-w500 mb-0">2.97km</p>
-                        </div>
-                      </div>
-                    </div>
-                    <div className="card-footer border-0 pt-2">
-                      <div className="common d-flex align-items-center justify-content-between">
-                        <div>
-                          <Link to={"#"}>
-                            <h4>{item.title}</h4>
-                          </Link>
-                          <h3 className=" mb-0 text-primary">R$ {item.price}</h3>
-                        </div>
-                        <div
-                          className={`plus c-pointer ${
-                            item.check ? "active" : ""
-                          }`}
-                          onClick={() => handleClick("check", item.id)}
-                        >
-                          <div className="sub-bx"></div>
-                        </div>
-                      </div>
-                    </div>
+            {loading && (
+              <div className="row">
+                {Array.of(...Array(10)).map((_, index) => (
+                  <div
+                    key={index}
+                    className="col-6 col-md-4 col-lg-3 mb-4 d-flex justify-content-center"
+                  >
+                    <Skeleton height={200} width={250} />
                   </div>
-                </div>
-                </>
-              ))}
-              <div className="d-flex align-items-center justify-content-xl-between justify-content-center flex-wrap pagination-bx">
-                <div className="mb-sm-0 mb-3 pagination-title">
-                  <p className="mb-0">
-                    <span>Mostrando 1-5</span> de <span>100</span> produtos
-                  </p>
-                </div>
-                <nav>
-                  <ul className="pagination pagination-gutter">
-                    <li className="page-item page-indicator">
-                      <Link to={"#"} className="page-link">
-                        <i className="la la-angle-left"></i>
-                      </Link>
-                    </li>
-                    <li className="page-item active">
-                      <Link to={"#"} className="page-link">
-                        1
-                      </Link>
-                    </li>
-                    <li className="page-item">
-                      <Link to={"#"} className="page-link">
-                        2
-                      </Link>
-                    </li>
-
-                    <li className="page-item">
-                      <Link to={"#"} className="page-link">
-                        3
-                      </Link>
-                    </li>
-                    <li className="page-item page-indicator">
-                      <Link to={"#"} className="page-link">
-                        <i className="la la-angle-right"></i>
-                      </Link>
-                    </li>
-                  </ul>
-                </nav>
+                ))}
               </div>
-            </div>
+            )}
+            {menuItems?.items.length && !loading ? (
+              <div className="row">
+                {menuItems.items.map((item, ind) => (
+                  <React.Fragment key={ind}>
+                    <div className="col-xl-3 col-xxl-4 col-sm-6" key={ind}>
+                      <div className="card dishe-bx b-hover style-1">
+                        <i
+                          className={`fa-solid fa-heart ms-auto c-heart c-pointer ${
+                            item.heart ? "active" : ""
+                          }`}
+                          onClick={() => handleClick("heart", item.id)}
+                        ></i>
+                        <div className="card-body pb-0 pt-3">
+                          <div className="text-center mb-2">
+                            {item.image ? (
+                              <img
+                                className="text-truncate"
+                                src={item.image}
+                                alt={item.name}
+                                style={{
+                                  width: "60px",
+                                  height: "60px",
+                                  objectFit: "cover",
+                                  borderRadius: "8px",
+                                  paddingRight: "8px",
+                                }}
+                              />
+                            ) : (
+                              <i
+                                className="bi bi-image-fill"
+                                style={{
+                                  fontSize: "60px",
+                                  display: "block",
+                                  textAlign: "center",
+                                  lineHeight: "60px",
+                                  color: "#ccc",
+                                  paddingRight: "8px",
+                                }}
+                                title={item.name}
+                              ></i>
+                            )}
+                          </div>
+                          <div className="border-bottom pb-3">
+                            <h4 className="font-w500 mb-1">{item.name}</h4>
+                            <div className="d-flex align-items-center">
+                              <svg
+                                width="16"
+                                height="15"
+                                viewBox="0 0 16 15"
+                                fill="none"
+                                xmlns="http://www.w3.org/2000/svg"
+                              >
+                                <path
+                                  d="M8 0.500031L9.79611 6.02789H15.6085L10.9062 9.4443L12.7023 14.9722L8 11.5558L3.29772 14.9722L5.09383 9.4443L0.391548 6.02789H6.20389L8 0.500031Z"
+                                  fill="#FC8019"
+                                />
+                              </svg>
+                              <p className="font-w500 mb-0 px-2">5</p>
+                              <svg
+                                className="me-2"
+                                width="4"
+                                height="5"
+                                viewBox="0 0 4 5"
+                                fill="none"
+                                xmlns="http://www.w3.org/2000/svg"
+                              >
+                                <circle
+                                  cx="2"
+                                  cy="2.50003"
+                                  r="2"
+                                  fill="#C4C4C4"
+                                />
+                              </svg>
+                              <p className=" font-w500 mb-0">1k+ Reviews</p>
+                              <svg
+                                className="mx-2"
+                                width="4"
+                                height="5"
+                                viewBox="0 0 4 5"
+                                fill="none"
+                                xmlns="http://www.w3.org/2000/svg"
+                              >
+                                <circle cx="2" cy="2.5" r="2" fill="#C4C4C4" />
+                              </svg>
+                              <p className="font-w500 mb-0">2.97km</p>
+                            </div>
+                          </div>
+                        </div>
+                        <div className="card-footer border-0 pt-2">
+                          <div className="common d-flex align-items-center justify-content-between">
+                            <div>
+                              <Link to={"#"}>
+                                <h4>{item.title}</h4>
+                              </Link>
+                              <h3 className=" mb-0 text-primary">
+                                R$ {item.price}
+                              </h3>
+                            </div>
+                            <div
+                              className={`plus c-pointer ${
+                                item.check ? "active" : ""
+                              }`}
+                              onClick={() => handleClick("check", item.id)}
+                            >
+                              <div className="sub-bx"></div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </React.Fragment>
+                ))}
+                <div className="d-flex align-items-center justify-content-xl-between justify-content-center flex-wrap pagination-bx">
+                  <div className="mb-sm-0 mb-3 pagination-title">
+                    <p className="mb-0">
+                      <span>Mostrando 1-5</span> de <span>100</span> produtos
+                    </p>
+                  </div>
+                  <nav>
+                    <ul className="pagination pagination-gutter">
+                      <li className="page-item page-indicator">
+                        <Link to={"#"} className="page-link">
+                          <i className="la la-angle-left"></i>
+                        </Link>
+                      </li>
+                      <li className="page-item active">
+                        <Link to={"#"} className="page-link">
+                          1
+                        </Link>
+                      </li>
+                      <li className="page-item">
+                        <Link to={"#"} className="page-link">
+                          2
+                        </Link>
+                      </li>
+
+                      <li className="page-item">
+                        <Link to={"#"} className="page-link">
+                          3
+                        </Link>
+                      </li>
+                      <li className="page-item page-indicator">
+                        <Link to={"#"} className="page-link">
+                          <i className="la la-angle-right"></i>
+                        </Link>
+                      </li>
+                    </ul>
+                  </nav>
+                </div>
+              </div>
+            ) : (
+              !loading && (
+                <p className="mb-1">
+                  Essa categoria não há produtos vinculados.
+                </p>
+              )
+            )}
           </Tab.Pane>
         </Tab.Content>
       </Tab.Container>
