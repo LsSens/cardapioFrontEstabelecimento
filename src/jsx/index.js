@@ -132,7 +132,7 @@ const Markup = () => {
     { url: "dashboard", component: <Home /> },
     { url: "dashboard-dark", component: <DashboardDark /> },
     { url: "food-order", component: <FoodOrder /> },
-    { url: "favorite-menu", component: <FavoriteMenu /> },
+    { url: "menu/:id", component: <FavoriteMenu /> },
     { url: "message", component: <Message /> },
     { url: "order-history", component: <OrderHistory /> },
     { url: "notification", component: <Notification /> },
