@@ -53,8 +53,24 @@ function Register(props) {
     const { name, value } = e.target;
 
     if (name === "company.address.cep") {
-      if (isNaN(value)) return;
-      if (value.length > 8) return;
+      if (formData.company.address.city) {
+        if (value === formData.company.address.cep) return;
+        setFormData((prevFormData) => ({
+          ...prevFormData,
+          company: {
+            ...prevFormData.company,
+            address: {
+              ...prevFormData.company.address,
+              cep: "",
+              neighborhood: "",
+              city: "",
+              state: "",
+              lat: "",
+              lng: "",
+            },
+          },
+        }));
+      }
     }
 
     if (name === "company.address.number") {
@@ -381,7 +397,7 @@ function Register(props) {
                               value={formData.company.address.street}
                               onChange={handleChange}
                               className="form-control"
-                              placeholder="Nome da rua"
+                              placeholder="Rua"
                               style={{
                                 textTransform: "capitalize",
                               }}

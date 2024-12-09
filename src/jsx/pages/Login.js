@@ -17,10 +17,12 @@ function Login(props) {
 
   const [email, setEmail] = useState("admin@company.com");
   const [password, setPassword] = useState("senha123");
+  const [showPassword, setShowPassword] = useState(false);
+
+  const loading = useSelector((state) => state.auth.showLoading);
 
   let errorsObj = { email: "", password: "" };
   const [errors, setErrors] = useState(errorsObj);
-  const loading = useSelector((state) => state.auth.showLoading);
 
   async function onLogin(e) {
     e.preventDefault();
@@ -91,24 +93,32 @@ function Login(props) {
                           </div>
                         )}
                       </div>
-                      <div className="mb-3">
-                        <label className="mb-1">
-                          <strong>Senha</strong>
-                        </label>
+                      <div className="input-group">
                         <input
-                          type="password"
+                          type={showPassword ? "text" : "password"}
                           className="form-control"
                           value={password}
                           onChange={(e) => setPassword(e.target.value)}
                         />
-                        {errors.password && (
-                          <div className="text-danger fs-12">
-                            {errors.password}
-                          </div>
-                        )}
+                        <span
+                          className="input-group-text"
+                          role="button"
+                          data-bs-toggle="tooltip"
+                          data-bs-placement="top"
+                          title={
+                            showPassword ? "Ocultar senha" : "Exibir senha"
+                          }
+                          onClick={() => setShowPassword(!showPassword)}
+                        >
+                          <i
+                            className={`bi ${
+                              showPassword ? "bi-eye-slash" : "bi-eye"
+                            }`}
+                          ></i>
+                        </span>
                       </div>
-                      <div className="row d-flex justify-content-between mt-4 mb-2">
-                        <div className="mb-3">
+                      <div className="row d-flex justify-content-between mt-2">
+                        <div className="mb-4 d-flex justify-content-between align-items-center">
                           <div className="form-check custom-checkbox ms-1">
                             <input
                               type="checkbox"
@@ -116,16 +126,21 @@ function Login(props) {
                               id="basic_checkbox_1"
                             />
                             <label
-                              className="form-check-label"
+                              className="form-check-label mb-0"
                               htmlFor="basic_checkbox_1"
                             >
                               Lembrar de mim
                             </label>
                           </div>
+                          <div>
+                            <NavLink
+                              to="/forgot-password"
+                              className="text-primary text-decoration-none"
+                            >
+                              Esqueceu sua senha?
+                            </NavLink>
+                          </div>
                         </div>
-                        {/* <div className="mb-3">
-													<Link to="/page-register">Sign up</Link>
-												</div> */}
                       </div>
                       <div className="text-center">
                         <button
@@ -137,11 +152,10 @@ function Login(props) {
                         </button>
                       </div>
                     </form>
-                    <div className="text-center">
+                    <div className="text-center mt-1">
                       <span>
                         Não tem conta?{" "}
                         <NavLink to="/register" className="text-primary">
-                          {" "}
                           Cadastrar
                         </NavLink>
                       </span>

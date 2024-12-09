@@ -21,6 +21,16 @@ export function login(email, password) {
   return api.post(`/auth/login`, postData);
 }
 
+export function forgotPassword(email) {
+  const postData = { email };
+  return api.post(`/auth/forgot-password`, postData);
+}
+
+export function resetPassword(token, newPassword) {
+  const postData = { token, newPassword };
+  return api.post(`/auth/reset-password`, postData);
+}
+
 export function formatError(errorResponse) {
   switch (errorResponse.error.message) {
     case "EMAIL_EXISTS":
@@ -63,6 +73,10 @@ export function checkAutoLogin(dispatch, navigate) {
   const currentPath = window.location.pathname;
 
   if (currentPath === "/register") {
+    return;
+  }
+
+  if (currentPath === "/forgot-password") {
     return;
   }
 

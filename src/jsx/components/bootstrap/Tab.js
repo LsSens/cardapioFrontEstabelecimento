@@ -180,7 +180,7 @@ const UiTab = () => {
               <Row>
                 <Tab.Container defaultActiveKey={tabData[0].name.toLowerCase()}>
                   <Col sm={4}>
-                    <Nav as="ul" className="flex-column nav-pills mb-3">
+                    <Nav as="ul" className="flex- nav-pills mb-3">
                       {tabData.map((data, i) => (
                         <Nav.Item as="li" key={i}>
                           <Nav.Link eventKey={data.name.toLowerCase()}>
