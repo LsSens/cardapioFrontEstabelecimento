@@ -2,16 +2,13 @@ import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import Skeleton from "react-loading-skeleton";
 import "react-loading-skeleton/dist/skeleton.css";
-import MenuCategorySlider from "./MenuCategorySlider";
 import MenuPopularSlider from "./MenuPopularSlider";
-import BestSellerSlider from "./BestSellerSlider";
 import { addMenu, getMenus } from "../../../../services/MenuService";
 import Alert from "sweetalert2";
 import { getItems } from "../../../../services/ItemsService";
 
 const Menu = () => {
   const [menus, setMenus] = useState([]);
-  const [items, setItems] = useState([]);
   const [loading, setLoading] = useState(false);
   const hasFetched = React.useRef(false);
 
@@ -135,9 +132,6 @@ const Menu = () => {
       const fetchData = async () => {
         await getMenus().then(async (response) => {
           setMenus(response.data);
-        });
-        await getItems().then(async (response) => {
-          setItems(response.data);
         });
         setLoading(false);
       };

@@ -2,11 +2,12 @@
 import React, { useState, useCallback } from "react";
 import opencage from "opencage-api-client";
 import debounce from "lodash.debounce";
+import InputMask from "react-input-mask";
 
 const OpenCageAutocomplete = ({ label, onSelect, value, onChange }) => {
   const [suggestions, setSuggestions] = useState([]);
   const [loading, setLoading] = useState(false);
-  const api = process.env.REACT_APP_GEO_KEY
+  const api = process.env.REACT_APP_GEO_KEY;
 
   const fetchSuggestions = async (cep) => {
     if (!cep || !/^\d{5}-?\d{3}$/.test(cep)) {
@@ -53,12 +54,13 @@ const OpenCageAutocomplete = ({ label, onSelect, value, onChange }) => {
       <label>
         <strong>{label}</strong>
       </label>
-      <input
+      <InputMask
+        mask="99999-999"
         name="company.address.cep"
         value={value}
         onChange={handleInputChange}
         className="form-control"
-        placeholder="Digite o endereço"
+        placeholder="00000-000"
         style={{ paddingRight: "2rem" }}
       />
       {loading && (

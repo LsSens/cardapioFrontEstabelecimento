@@ -49,7 +49,7 @@ function App(props) {
     <Routes>
       <Route path="/login" element={<Login />} />
       <Route path="/register" element={<SignUp />} />
-      <Route path="/page-forgot-password" element={<ForgotPassword />} />
+      <Route path="/forgot-password" element={<ForgotPassword />} />
     </Routes>
   );
   if (props.isAuthenticated) {
