@@ -19,7 +19,7 @@ import Home from "./components/Dashboard/Home";
 import DashboardDark from "./components/Dashboard/DashboardDark";
 import FoodOrder from "./components/Dashboard/FoodOrder";
 import FavoriteMenu from "./components/Dashboard/FavoriteMenu";
-import Message from "./components/Dashboard/Message";
+import Customers from "./components/Dashboard/Customers";
 import OrderHistory from "./components/Dashboard/OrderHistory";
 import Notification from "./components/Dashboard/Notification";
 import Bill from "./components/Dashboard/Bill";
@@ -63,7 +63,7 @@ import ProductDetail from "./components/AppsMenu/Shop/ProductGrid/ProductDetail"
 import Checkout from "./components/AppsMenu/Shop/Checkout/Checkout";
 import Invoice from "./components/AppsMenu/Shop/Invoice/Invoice";
 import ProductOrder from "./components/AppsMenu/Shop/ProductOrder";
-import Customers from "./components/AppsMenu/Shop/Customers/Customers";
+// import Customers from "./components/AppsMenu/Shop/Customers/Customers";
 
 /// Charts
 import SparklineChart from "./components/charts/Sparkline";
@@ -133,7 +133,7 @@ const Markup = () => {
     { url: "dashboard-dark", component: <DashboardDark /> },
     { url: "food-order", component: <FoodOrder /> },
     { url: "menu/:id", component: <FavoriteMenu /> },
-    { url: "message", component: <Message /> },
+    { url: "customers", component: <Customers /> },
     { url: "order-history", component: <OrderHistory /> },
     { url: "notification", component: <Notification /> },
     { url: "bill", component: <Bill /> },
@@ -177,7 +177,7 @@ const Markup = () => {
     { url: "ecom-product-order", component: <ProductOrder /> },
     { url: "ecom-checkout", component: <Checkout /> },
     { url: "ecom-invoice", component: <Invoice /> },
-    { url: "ecom-customers", component: <Customers /> },
+    // { url: "ecom-customers", component: <Customers /> },
 //
     ///// Chart
     { url: "chart-sparkline", component: <SparklineChart /> },
