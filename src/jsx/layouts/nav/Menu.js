@@ -69,8 +69,8 @@ export const MenuList = [
                 to: 'orders',
             },
             {
-                title: 'Reviews',
-                to: 'customer-reviews',
+                title: 'Clientes',
+                to: 'customers',
             },
         ]
     },
