@@ -1,7 +1,7 @@
 import api from "./Api";
 
-export function getMenus() {
-  return api.get(`/menus`);
+export function getMenus(page) {
+  return api.get(`/menus?page=${page}`);
 }
 
 export function addMenu(menu_name, image) {
