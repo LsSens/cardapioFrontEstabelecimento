@@ -13,12 +13,13 @@ const Orders = () => {
     setSelectedOrder(order);
   };
 
+
   useEffect(() => {
     const fetchOrders = async () => {
       try {
         const response = await getOrders();
         setOrders(response.data);
-        setSelectedOrder(response.data[0])
+        setSelectedOrder(response.data.data[0])
         setLoading(false);
       } catch (error) {
         console.error("Erro ao buscar ordens:", error);
@@ -48,15 +49,16 @@ const Orders = () => {
                     </Nav.Link>
                   </Nav>
                 </nav>
-                <Tab.Content>
+                <Tab.Content style={{ maxHeight: "550px", overflow: 'auto' }}>
                   {loading ? (
                     <p>Carregando pedidos...</p>
                   ) : (
                     <>
                       <Tab.Pane eventKey="Order">
-                        {orders.map((order, ind) => (
+                        {orders.data.map((order, ind) => (
                           <div
-                            className="orderin-bx d-flex align-items-center justify-content-between"
+                            className={`orderin-bx d-flex align-items-center justify-content-between ${selectedOrder?.id === order.id ? "selected-order" : ""
+                              }`}
                             key={ind}
                             onClick={() => handleSelectOrder(order)}
                             style={{ cursor: "pointer" }}
@@ -79,7 +81,7 @@ const Orders = () => {
                         ))}
                       </Tab.Pane>
                       <Tab.Pane eventKey="Prepared">
-                        {orders
+                        {orders.data
                           .filter((order) => order.status === "Prepared")
                           .map((order, ind) => (
                             <div
@@ -102,7 +104,7 @@ const Orders = () => {
                           ))}
                       </Tab.Pane>
                       <Tab.Pane eventKey="Delivered">
-                        {orders
+                        {orders.data
                           .filter((order) => order.status === "Delivered")
                           .map((order, ind) => (
                             <div
@@ -123,24 +125,48 @@ const Orders = () => {
                               </div>
                             </div>
                           ))}
+
                       </Tab.Pane>
                     </>
                   )}
                 </Tab.Content>
+                <div className="d-flex align-items-center justify-content-xl-between justify-content-center flex-wrap pagination-bx  mt-4">
+                  <div className="mb-sm-0 mb-3 pagination-title">
+                    <p className="mb-0">
+                      <span>Mostrando {orders.data?.length ?? 0}</span> de <span>{orders.totalItems ?? 0}</span> pedidos
+                    </p>
+                  </div>
+                  <nav>
+                    <ul className="pagination  pagination-gutter">
+                      <li className="page-item page-indicator">
+                        <Link to={"#"} className="page-link">
+                          <i className="la la-angle-left"></i>
+                        </Link>
+                      </li>
+                      {Array.of(...Array(orders.totalPages)).map((_, index) => (
+                        <li className={orders.currentPage === index + 1 ? "page-item active" : "page-item"}>
+                          <Link to={"#"} className="page-link" onClick={() => 'changePage'(index + 1)}>
+                            {index + 1}
+                          </Link>
+                        </li>
+                      ))}
+                    </ul>
+                  </nav>
+                </div>
               </div>
             </Tab.Container>
           </div>
         </div>
         <div className="col-xl-7">
-          <div className="col-xl-8">
+          <div>
             <div className="card border-0">
               {selectedOrder ? (
                 <>
-                  <h4 className="cate-title mb-sm-3 mb-2 mt-xl-0 mt-3">
-                    Detalhes do pedido
-                  </h4>
                   <div className="card h-auto">
                     <div className="card-body">
+                      <h4 className="cate-title mb-sm-3 mb-2 mt-xl-0 mt-3">
+                        Detalhes do pedido
+                      </h4>
                       <div className="d-flex align-items-center justify-content-between border-bottom flex-wrap">
                         <div className="mb-4">
                           <h4 className="font-w500">
@@ -154,7 +180,7 @@ const Orders = () => {
                           <div>
                             <h6 className="font-w500">Detalhes do cliente</h6>
                             <span>
-                              {selectedOrder.customer.name || "Unknown"}
+                              {selectedOrder.customer.name || "-"}
                             </span>
                           </div>
                         </div>
