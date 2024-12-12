@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 import React, { useContext } from "react";
 
 /// React router dom
@@ -130,100 +131,100 @@ const Markup = () => {
     /// Dashboard
     { url: "", component: <Home /> },
     { url: "dashboard", component: <Home /> },
-    { url: "dashboard-dark", component: <DashboardDark /> },
-    { url: "food-order", component: <FoodOrder /> },
+    // { url: "dashboard-dark", component: <DashboardDark /> },
+    // { url: "food-order", component: <FoodOrder /> },
     { url: "menu/:id", component: <FavoriteMenu /> },
     { url: "customers", component: <Customers /> },
-    { url: "order-history", component: <OrderHistory /> },
-    { url: "notification", component: <Notification /> },
-    { url: "bill", component: <Bill /> },
-    { url: "setting", component: <HomeSetting /> },
-    { url: "checkout", component: <CheckoutPage /> },
+    // { url: "order-history", component: <OrderHistory /> },
+    // { url: "notification", component: <Notification /> },
+    // { url: "bill", component: <Bill /> },
+    // { url: "setting", component: <HomeSetting /> },
+    // { url: "checkout", component: <CheckoutPage /> },
     
     // Restaurant
     { url: "restaurant", component: <Restaurant /> },
-    { url: "withdrow", component: <Withdrow /> },
+    // { url: "withdrow", component: <Withdrow /> },
     { url: "menu", component: <Menu /> },
     { url: "orders", component: <Orders /> },
-    { url: "customer-reviews", component: <CustomerReviews /> },
+    // { url: "customer-reviews", component: <CustomerReviews /> },
     
 
     //Drivers
-    {url:"deliver-main", component:<DeliverMain />},
-    {url:"deliver-order", component:<DeliverOrder />},
-    {url:"feedback", component:<Feedback />},
+    // {url:"deliver-main", component:<DeliverMain />},
+    // {url:"deliver-order", component:<DeliverOrder />},
+    // {url:"feedback", component:<Feedback />},
 
 	/////Demo
-    { url: "container-wide", component: <Theme1 /> },
-    { url: "horizontal-sidebar", component: <Theme2 /> },
-    { url: "nav-header", component: <Theme3 /> },
-    { url: "secondary-sidebar", component: <Theme4 /> },
-    { url: "mini-sidebar", component: <Theme5/> },
-    { url: "sidebar-theme", component: <Theme6/> },
-    { url: "header-theme", component: <Theme7/> },
+    // { url: "container-wide", component: <Theme1 /> },
+    // { url: "horizontal-sidebar", component: <Theme2 /> },
+    // { url: "nav-header", component: <Theme3 /> },
+    // { url: "secondary-sidebar", component: <Theme4 /> },
+    // { url: "mini-sidebar", component: <Theme5/> },
+    // { url: "sidebar-theme", component: <Theme6/> },
+    // { url: "header-theme", component: <Theme7/> },
 	
 	/// Apps
-    { url: "app-profile", component: <AppProfile /> },
-    { url: "email-compose", component: <Compose /> },
-    { url: "email-inbox", component: <Inbox /> },
-    { url: "email-read", component: <Read /> },
-    { url: "app-calender", component: <Calendar /> },
-    { url: "post-details", component: <PostDetails /> },
+    // { url: "app-profile", component: <AppProfile /> },
+    // { url: "email-compose", component: <Compose /> },
+    // { url: "email-inbox", component: <Inbox /> },
+    // { url: "email-read", component: <Read /> },
+    // { url: "app-calender", component: <Calendar /> },
+    // { url: "post-details", component: <PostDetails /> },
 
   /// Shop
     { url: "products", component: <ProductGrid /> },
-    { url: "ecom-product-list", component: <ProductList /> },
-    { url: "ecom-product-detail", component: <ProductDetail /> },
-    { url: "ecom-product-order", component: <ProductOrder /> },
-    { url: "ecom-checkout", component: <Checkout /> },
-    { url: "ecom-invoice", component: <Invoice /> },
+    // { url: "ecom-product-list", component: <ProductList /> },
+    // { url: "ecom-product-detail", component: <ProductDetail /> },
+    // { url: "ecom-product-order", component: <ProductOrder /> },
+    // { url: "ecom-checkout", component: <Checkout /> },
+    // { url: "ecom-invoice", component: <Invoice /> },
     // { url: "ecom-customers", component: <Customers /> },
 //
     ///// Chart
-    { url: "chart-sparkline", component: <SparklineChart /> },
-    { url: "chart-chartjs", component: <ChartJs /> },    
-    { url: "chart-apexchart", component: <ApexChart /> },
-    { url: "chart-rechart", component: <RechartJs /> },
-//
-    ///// Bootstrap
-    { url: "ui-alert", component: <UiAlert /> },
-    { url: "ui-badge", component: <UiBadge /> },
-    { url: "ui-button", component: <UiButton /> },
-    { url: "ui-modal", component: <UiModal /> },
-    { url: "ui-button-group", component: <UiButtonGroup /> },
-    { url: "ui-accordion", component: <UiAccordion /> },
-    { url: "ui-list-group", component: <UiListGroup /> },
-    { url: "ui-card", component: <UiCards />},
-    { url: "ui-carousel", component: <UiCarousel /> },
-    { url: "ui-dropdown", component: <UiDropDown /> },
-    { url: "ui-popover", component: <UiPopOver /> },
-    { url: "ui-progressbar", component: <UiProgressBar /> },
-    { url: "ui-tab", component: <UiTab /> },
-    { url: "ui-pagination", component: <UiPagination /> },
-    { url: "ui-typography", component: <UiTypography /> },
-    { url: "ui-grid", component: <UiGrid /> },
-    ///// Plugin
-    { url: "uc-select2", component: <Select2 /> },
-    { url: "uc-sweetalert", component: <MainSweetAlert /> },
-    { url: "uc-toastr", component: <Toastr /> },
-    { url: "map-jqvmap", component: <JqvMap /> },
-    { url: "uc-lightgallery", component: <Lightgallery /> },
+//     { url: "chart-sparkline", component: <SparklineChart /> },
+//     { url: "chart-chartjs", component: <ChartJs /> },    
+//     { url: "chart-apexchart", component: <ApexChart /> },
+//     { url: "chart-rechart", component: <RechartJs /> },
+// //
+//     ///// Bootstrap
+//     { url: "ui-alert", component: <UiAlert /> },
+//     { url: "ui-badge", component: <UiBadge /> },
+//     { url: "ui-button", component: <UiButton /> },
+//     { url: "ui-modal", component: <UiModal /> },
+//     { url: "ui-button-group", component: <UiButtonGroup /> },
+//     { url: "ui-accordion", component: <UiAccordion /> },
+//     { url: "ui-list-group", component: <UiListGroup /> },
+//     { url: "ui-card", component: <UiCards />},
+//     { url: "ui-carousel", component: <UiCarousel /> },
+//     { url: "ui-dropdown", component: <UiDropDown /> },
+//     { url: "ui-popover", component: <UiPopOver /> },
+//     { url: "ui-progressbar", component: <UiProgressBar /> },
+//     { url: "ui-tab", component: <UiTab /> },
+//     { url: "ui-pagination", component: <UiPagination /> },
+//     { url: "ui-typography", component: <UiTypography /> },
+//     { url: "ui-grid", component: <UiGrid /> },
+//     ///// Plugin
+//     { url: "uc-select2", component: <Select2 /> },
+//     { url: "uc-sweetalert", component: <MainSweetAlert /> },
+//     { url: "uc-toastr", component: <Toastr /> },
+//     { url: "map-jqvmap", component: <JqvMap /> },
+//     { url: "uc-lightgallery", component: <Lightgallery /> },
 	
 	
-    ///// Widget
-    { url: "widget-basic", component: <Widget /> },
+//     ///// Widget
+//     { url: "widget-basic", component: <Widget /> },
 
-    ///// Form
-    { url: "form-element", component: <Element /> },
-    { url: "form-wizard", component: <Wizard /> },
-    { url: "form-ckeditor", component: <CkEditor /> },
-    { url: "form-pickers", component: <Pickers /> },
-    { url: "form-validation", component: <FormValidation /> },
-//
-    ///// table
-	  { url: 'table-filtering', component: <FilteringTable /> },
-    { url: 'table-sorting', component: <SortingTable /> },
-    { url: "table-bootstrap-basic", component: <BootstrapTable /> },
+//     ///// Form
+//     { url: "form-element", component: <Element /> },
+//     { url: "form-wizard", component: <Wizard /> },
+//     { url: "form-ckeditor", component: <CkEditor /> },
+//     { url: "form-pickers", component: <Pickers /> },
+//     { url: "form-validation", component: <FormValidation /> },
+// //
+//     ///// table
+// 	  { url: 'table-filtering', component: <FilteringTable /> },
+//     { url: 'table-sorting', component: <SortingTable /> },
+//     { url: "table-bootstrap-basic", component: <BootstrapTable /> },
 
   ];
   

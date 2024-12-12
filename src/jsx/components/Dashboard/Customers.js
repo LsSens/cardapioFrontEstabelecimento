@@ -103,7 +103,7 @@ function Customers() {
     const fetchCustomers = async () => {
       try {
         const response = await getCustomers();
-        setCustomers(response.data);
+        setCustomers(response.data.data);
       } catch (error) {
         console.error("Erro ao buscar clientes:", error);
       } finally {
