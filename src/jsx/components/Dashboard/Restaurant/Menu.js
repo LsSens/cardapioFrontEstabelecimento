@@ -5,12 +5,15 @@ import "react-loading-skeleton/dist/skeleton.css";
 import MenuPopularSlider from "./MenuPopularSlider";
 import { addMenu, getMenus } from "../../../../services/MenuService";
 import Alert from "sweetalert2";
-import { getItems } from "../../../../services/ItemsService";
+import { deleteItems } from "../../../../services/ItemsService";
 
 const Menu = () => {
   const [menus, setMenus] = useState([]);
   const [loading, setLoading] = useState(false);
+  const [actualPage, setActualPage] = useState();
   const hasFetched = React.useRef(false);
+
+  const handleChangePage = (page) => fetchData(page)
 
   const handleAddMenu = () => {
     Alert.fire({
@@ -87,6 +90,12 @@ const Menu = () => {
     });
   };
 
+  const deleteProduct = async (item) => {
+    await deleteItems(item.item_id).then(async (response) => {
+      handleChangePage(actualPage)
+    });
+  }
+
   const handleImageUpload = (file) => {
     return new Promise((resolve, reject) => {
       const reader = new FileReader();
@@ -126,16 +135,18 @@ const Menu = () => {
     }
   };
 
+  const fetchData = async (page) => {
+    if(page) setActualPage(page)
+    setLoading(true);
+    await getMenus(page).then(async (response) => {
+      setMenus(response.data);
+    });
+    setLoading(false);
+  };
+
   useEffect(() => {
     if (!hasFetched.current) {
-      setLoading(true);
-      const fetchData = async () => {
-        await getMenus().then(async (response) => {
-          setMenus(response.data);
-        });
-        setLoading(false);
-      };
-      fetchData();
+      fetchData(1);
       hasFetched.current = true;
     }
   }, []);
@@ -202,30 +213,10 @@ const Menu = () => {
               Nova categoria
             </button>
           </div>
-          {/* <div className="d-flex align-items-center justify-content-between mb-2">
-            <h4 className="mb-0 cate-title">Categoria</h4>
-            <Link to={"/favorite-menu"} className="text-primary">
-              Ver todas <i className="fa-solid fa-angle-right ms-2"></i>
-            </Link>
-          </div>
-          <MenuCategorySlider
-            menus={menus}
-            setMenus={setMenus}
-            setLoading={setLoading}
-          /> */}
         </div>
         <div className="col-xl-12">
-          <MenuPopularSlider menus={menus} />
+          <MenuPopularSlider menus={menus} changePage={handleChangePage} deleteProduct={deleteProduct}/>
         </div>
-        {/* <div className="col-xl-12">
-          <div className="d-flex align-items-center justify-content-between mb-2 mt-sm-0 mt-3">
-            <h4 className=" mb-0 cate-title">Seus produtos</h4>
-            <Link to={"/favorite-menu"} className="text-primary">
-              Ver todos <i className="fa-solid fa-angle-right ms-2"></i>
-            </Link>
-          </div>
-          <BestSellerSlider items={items} />
-        </div> */}
       </div>
     </>
   );
