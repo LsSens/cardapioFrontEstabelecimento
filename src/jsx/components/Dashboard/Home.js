@@ -30,7 +30,7 @@ const reducer = (previousState, updatedState) => ({
 });
 
 const Home = () => {
-  const [dropSelect, setDropSelect] = useState("Other");
+  // const [dropSelect, setDropSelect] = useState("Other");
   const { changeBackground } = useContext(ThemeContext);
   const [detailsModal, setDetailsModal] = useState(false);
   const [notesModal, setNotesModal] = useState(false);
@@ -357,7 +357,7 @@ const Home = () => {
 								<option>Office</option>
 								<option>Other</option>
 							</select> */}
-              <Dropdown className="drop-select-blog">
+              {/* <Dropdown className="drop-select-blog">
                 <Dropdown.Toggle
                   as="div"
                   className="form-control default-select ms-0 py-4 wide i-false"
@@ -376,7 +376,7 @@ const Home = () => {
                     Other
                   </Dropdown.Item>
                 </Dropdown.Menu>
-              </Dropdown>
+              </Dropdown> */}
             </div>
           </div>
         </div>

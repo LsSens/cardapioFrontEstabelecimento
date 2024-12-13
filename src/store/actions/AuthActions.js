@@ -54,7 +54,7 @@ export function loginAction(email, password, navigate) {
         //return response.data;
         //return 'success';
         //history.push('/dashboard');
-        navigate("/dashboard");
+        navigate("/restaurant");
       })
       .catch((error) => {
         const errorMessage = error.response.data.error;

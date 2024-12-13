@@ -1,6 +1,5 @@
 /// Menu
 import React, {
-  Component,
   useContext,
   useEffect,
   useReducer,
@@ -10,12 +9,10 @@ import React, {
 /// Scroll
 import PerfectScrollbar from "react-perfect-scrollbar";
 import Collapse from "react-bootstrap/Collapse";
-import Button from "react-bootstrap/Button";
 
 /// Link
 import { Link, NavLink } from "react-router-dom";
 
-import { MenuList } from "./Menu";
 import { useScrollPosition } from "@n8tb1t/use-scroll-position";
 import { ThemeContext } from "../../../context/ThemeContext";
 
@@ -25,8 +22,7 @@ const reducer = (previousState, updatedState) => ({
 });
 
 const initialState = {
-  active: "",
-  activeSubmenu: "",
+  active: "Meu restaurante",
 };
 
 const SideBar = () => {
@@ -59,20 +55,42 @@ const SideBar = () => {
       setState({ active: "" });
     }
   };
-  const handleSubmenuActive = (status) => {
-    setState({ activeSubmenu: status });
-    if (state.activeSubmenu === status) {
-      setState({ activeSubmenu: "" });
-    }
-    //status.preventDefault();
-  };
-  // Menu dropdown list End
+  /// Active menu
+  const menuList = [
+    {
+      title: "Meu restaurante",
+      to: "restaurant",
+      iconStyle: "bi bi-shop-window",
+    },
+    {
+      title: "Categorias",
+      to: "menu",
+      iconStyle: "bi bi-list",
+    },
+    {
+      title: "Produtos",
+      to: "products",
+      iconStyle: "bi bi-box-seam",
+    },
+    {
+      title: "Pedidos",
+      to: "orders",
+      iconStyle: "bi bi-receipt",
+    },
+    {
+      title: "Clientes",
+      to: "customers",
+      iconStyle: "bi bi-people",
+    },
+  ];
 
-  /// Path
   let path = window.location.pathname;
   path = path.split("/");
   path = path[path.length - 1];
-  /// Active menu
+  useEffect(() => {
+    const actualRoute = menuList.find(item => item.to === path)?.title
+    handleMenuActive(actualRoute)
+  }, []);
 
   return (
     <div
@@ -89,111 +107,22 @@ const SideBar = () => {
       <PerfectScrollbar className="dlabnav-scroll">
         <ul className="metismenu" id="menu">
           <li className="menu-title"></li>
-          {MenuList.map((data, index) => {
-            let menuClass = data.classsChange;
-            if (menuClass === "menu-title") {
-              return <li className={menuClass}>{data.title}</li>;
-            } else {
+          {menuList.map((data, index) => {
               return (
                 <li
-                  className={` ${
+                  className={`${
                     state.active === data.title ? "mm-active" : ""
                   }`}
                   key={index}
+                  onClick={() => handleMenuActive(data.title)}
                 >
-                  {data.content && data.content.length > 0 ? (
-                    <Link
-                      to={"#"}
-                      className="has-arrow"
-                      onClick={() => {
-                        handleMenuActive(data.title);
-                      }}
-                    >
-                      <i className={data.iconStyle}></i>
-                      <span className="nav-text">{data.title}</span>
-                    </Link>
-                  ) : (
-                    <NavLink to={data.to}>
-                      <i className={data.iconStyle}></i>
-                      <span className="nav-text">{data.title}</span>
-                    </NavLink>
-                  )}
-                  <Collapse in={state.active === data.title ? true : false}>
-                    <ul
-                      className={`${
-                        menuClass === "mm-collapse" ? "mm-show" : ""
-                      }`}
-                    >
-                      {data.content &&
-                        data.content.map((data, index) => {
-                          return (
-                            <>
-                              <li
-                                key={index}
-                                className={`${
-                                  state.activeSubmenu === data.title
-                                    ? "mm-active"
-                                    : ""
-                                }`}
-                              >
-                                {data.content && data.content.length > 0 ? (
-                                  <NavLink
-                                    to={data.to}
-                                    className={data.hasMenu ? "has-arrow" : ""}
-                                    onClick={() => {
-                                      handleSubmenuActive(data.title);
-                                    }}
-                                  >
-                                    {data.title}
-                                  </NavLink>
-                                ) : (
-                                  <Link to={data.to}>{data.title}</Link>
-                                )}
-                                <Collapse
-                                  in={
-                                    state.activeSubmenu === data.title
-                                      ? true
-                                      : false
-                                  }
-                                >
-                                  <ul
-                                    className={`${
-                                      menuClass === "mm-collapse"
-                                        ? "mm-show"
-                                        : ""
-                                    }`}
-                                  >
-                                    {data.content &&
-                                      data.content.map((data, index) => {
-                                        return (
-                                          <>
-                                            <li key={index}>
-                                              <Link
-                                                className={`${
-                                                  path === data.to
-                                                    ? "mm-active"
-                                                    : ""
-                                                }`}
-                                                to={data.to}
-                                              >
-                                                {data.title}
-                                              </Link>
-                                            </li>
-                                          </>
-                                        );
-                                      })}
-                                  </ul>
-                                </Collapse>
-                              </li>
-                            </>
-                          );
-                        })}
-                    </ul>
-                  </Collapse>
+                  <NavLink to={data.to}>
+                    <i className={data.iconStyle}></i>
+                    <span className="nav-text">{data.title}</span>
+                  </NavLink>
                 </li>
               );
-            }
-          })}
+            })}
         </ul>
       </PerfectScrollbar>
     </div>
