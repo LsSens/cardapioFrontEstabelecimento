@@ -5,6 +5,7 @@ import {
     LOGOUT_ACTION,
     SIGNUP_CONFIRMED_ACTION,
     SIGNUP_FAILED_ACTION,
+    UPDATE_IFOOD_INTEGRATION_ACTION,
 } from '../actions/AuthActions';
 
 const initialState = {
@@ -73,7 +74,23 @@ export function AuthReducer(state = initialState, action) {
             showLoading: action.payload,
         };
     }
+
+    // Novo case para atualizar o status do iFood
+    if (action.type === UPDATE_IFOOD_INTEGRATION_ACTION) {
+        return {
+            ...state,
+            auth: {
+                ...state.auth,
+                data: {
+                    ...state.auth.data,
+                    company: {
+                        ...state.auth.data?.company,
+                        ifood_integration: action.payload,
+                    },
+                },
+            },
+        };
+    }
+
     return state;
 }
-
-    

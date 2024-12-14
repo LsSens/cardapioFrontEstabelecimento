@@ -71,6 +71,7 @@ const MenuCategorySlider = ({ menus, setMenus, setLoading }) => {
       }
     });
   };
+
   return (
     <Swiper
       className="mySwiper-2"
@@ -134,9 +135,9 @@ const MenuCategorySlider = ({ menus, setMenus, setLoading }) => {
                     <Dropdown.Item onClick={() => handleEdit(menu)}>
                       Editar
                     </Dropdown.Item>
-                    <Dropdown.Item onClick={() => handleDelete(menu)}>
+                    {/* <Dropdown.Item onClick={() => handleDelete(menu)}>
                       Deletar
-                    </Dropdown.Item>
+                    </Dropdown.Item> */}
                   </Dropdown.Menu>
                 </Dropdown>
                 {menu.menu_image ? (

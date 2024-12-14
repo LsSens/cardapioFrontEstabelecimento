@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Link, useNavigate } from "react-router-dom";
 import { Dropdown } from "react-bootstrap";
@@ -6,20 +6,27 @@ import { Autoplay } from "swiper";
 import "swiper/css";
 import { useDispatch } from "react-redux";
 import { redirectToMenuAction } from "../../../../store/actions/MenuActions";
+import { ProductCreate } from "../../AppsMenu/Shop/ProductGrid/ProductCreate";
 
-const MenuPopularSlider = ({ menus, changePage, deleteProduct }) => {
+const MenuPopularSlider = ({ menus, changePage }) => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
+  const [editProduct, setEditProduct] = useState();
 
   const redirectToCategory = (menu) => {
     dispatch(redirectToMenuAction(menu));
     navigate("/menu/" + menu.menu_id);
   };
 
+  const handleEditProduct = (product) => {
+    setEditProduct(product)
+  }
+
   if(!menus.data) return <></>
 
   return (
     <>
+      <ProductCreate editProduct={editProduct} open={editProduct} close={() => setEditProduct(null)}/>
       {menus.data.map((menu) => (
         <div key={menu.menu_id}>
           <div className="d-flex align-items-center justify-content-between mb-2 mt-sm-0 mt-3">
@@ -50,19 +57,19 @@ const MenuPopularSlider = ({ menus, changePage, deleteProduct }) => {
                 spaceBetween: 20,
               },
               1024: {
-                slidesPerView: 2,
+                slidesPerView: 3,
                 spaceBetween: 20,
               },
               1200: {
-                slidesPerView: 2,
+                slidesPerView: 3,
                 spaceBetween: 20,
               },
               1480: {
-                slidesPerView: 3,
+                slidesPerView: 4,
                 spaceBetween: 20,
               },
               1920: {
-                slidesPerView: 3,
+                slidesPerView: 4,
                 spaceBetween: 20,
               },
             }}
@@ -156,8 +163,8 @@ const MenuPopularSlider = ({ menus, changePage, deleteProduct }) => {
                               </svg>
                             </Dropdown.Toggle>
                             <Dropdown.Menu align="end">
-                              <Dropdown.Item>Editar</Dropdown.Item>
-                              <Dropdown.Item onClick={() => deleteProduct(item)}>Deletar</Dropdown.Item>
+                              <Dropdown.Item onClick={() => handleEditProduct(item)}>Editar</Dropdown.Item>
+                              {/* <Dropdown.Item onClick={() => deleteProduct(item)}>Deletar</Dropdown.Item> */}
                             </Dropdown.Menu>
                           </Dropdown>
                         </div>

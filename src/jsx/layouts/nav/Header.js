@@ -15,6 +15,7 @@ import HeaderSlider from "./HeaderSlider";
 
 //import avatar from "../../../images/avatar/1.jpg";
 import profile from "../../../images/banner-img/pic-1.png";
+import { useSelector } from "react-redux";
 
 const LocationIcon = <i className="fa-solid fa-location-dot mx-2 " />;
 
@@ -82,6 +83,8 @@ const Header = ({ onNote }) => {
   //  : filterName.includes("editor")
   //  ? filterName.filter((f) => f !== "editor")
   //  : filterName;
+  const userData = useSelector((state) => state.auth.auth.data);
+
   return (
     <div className={`header ${headerFix ? "is-fixed" : ""}`}>
       <div className="header-content">
@@ -210,14 +213,14 @@ const Header = ({ onNote }) => {
                         <img src={profile} alt="" />
                         <div className="d-flex align-items-center sidebar-info">
                           <div>
-                            <h6 className="font-w500 mb-0 ms-2">Joshua</h6>
+                            <h6 className="font-w500 mb-0 ms-2">{userData.name}</h6>
                           </div>
                           <i className="fas fa-chevron-down"></i>
                         </div>
                       </div>
                     </Dropdown.Toggle>
                     <Dropdown.Menu className="dropdown-menu-end">
-                      <Link
+                      {/* <Link
                         to="./app-profile"
                         className="dropdown-item ai-icon "
                       >
@@ -367,7 +370,7 @@ const Header = ({ onNote }) => {
                           </g>
                         </svg>
                         <span className="ms-2">Settings </span>
-                      </Link>
+                      </Link> */}
                       <LogoutPage />
                     </Dropdown.Menu>
                   </Dropdown>

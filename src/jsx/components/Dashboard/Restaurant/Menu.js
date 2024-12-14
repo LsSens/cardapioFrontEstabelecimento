@@ -90,12 +90,6 @@ const Menu = () => {
     });
   };
 
-  const deleteProduct = async (item) => {
-    await deleteItems(item.item_id).then(async (response) => {
-      handleChangePage(actualPage)
-    });
-  }
-
   const handleImageUpload = (file) => {
     return new Promise((resolve, reject) => {
       const reader = new FileReader();
@@ -215,7 +209,7 @@ const Menu = () => {
           </div>
         </div>
         <div className="col-xl-12">
-          <MenuPopularSlider menus={menus} changePage={handleChangePage} deleteProduct={deleteProduct}/>
+          <MenuPopularSlider menus={menus} changePage={handleChangePage}/>
         </div>
       </div>
     </>

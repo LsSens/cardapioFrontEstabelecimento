@@ -14,6 +14,7 @@ export const LOGIN_CONFIRMED_ACTION = "[login action] confirmed login";
 export const LOGIN_FAILED_ACTION = "[login action] failed login";
 export const LOADING_TOGGLE_ACTION = "[Loading action] toggle loading";
 export const LOGOUT_ACTION = "[Logout action] logout action";
+export const UPDATE_IFOOD_INTEGRATION_ACTION = 'UPDATE_IFOOD_INTEGRATION_ACTION';
 
 export function signupAction(data, navigate) {
   return (dispatch) => {
@@ -54,7 +55,7 @@ export function loginAction(email, password, navigate) {
         //return response.data;
         //return 'success';
         //history.push('/dashboard');
-        navigate("/dashboard");
+        navigate("/restaurant");
       })
       .catch((error) => {
         const errorMessage = error.response.data.error;
@@ -62,6 +63,7 @@ export function loginAction(email, password, navigate) {
       });
   };
 }
+
 
 export function loginFailedAction(data) {
   return {
@@ -94,6 +96,13 @@ export function signupFailedAction(message) {
 export function loadingToggleAction(status) {
   return {
     type: LOADING_TOGGLE_ACTION,
+    payload: status,
+  };
+}
+
+export function updateIfoodIntegrationAction(status) {
+  return {
+    type: UPDATE_IFOOD_INTEGRATION_ACTION,
     payload: status,
   };
 }
