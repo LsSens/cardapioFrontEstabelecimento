@@ -39,7 +39,7 @@ function Restaurant() {
                                     <div className="row">
                                         <div className="col-xl-4 col-lg-4 col-6">
                                             <div className="line position-relative">
-                                                <p className="font-w500 mb-0">Total Income</p>
+                                                <p className="font-w500 mb-0">Total Income oi</p>
                                                 <h2 className="mb-0 text-primary">$12,890,00</h2>
                                             </div>
                                         </div>
