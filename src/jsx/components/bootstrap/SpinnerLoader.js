@@ -5,6 +5,7 @@ export const SpinnerLoader = ({loading}) => {
   if(!loading) return <></>
 
   return <div style={{
+      zIndex: 999,
       position: 'fixed',
       top: 0,
       left: 0,

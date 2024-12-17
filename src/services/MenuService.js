@@ -19,3 +19,9 @@ export function deleteMenu(menu_id) {
 export function getMenuItemsById(id) {
   return api.get(`/menus/${id}`);
 }
+
+export function putItemsIntoMenu(menu_id, itemIds){
+  return api.put(`/menus/${menu_id}/items`, {
+    item_ids: itemIds
+  });
+}

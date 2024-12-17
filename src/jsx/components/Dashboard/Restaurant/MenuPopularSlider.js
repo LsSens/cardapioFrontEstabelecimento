@@ -34,7 +34,7 @@ const MenuPopularSlider = ({ menus, changePage }) => {
 
   return (
     <>
-      <ProductCreate editProduct={editProduct} open={editProduct} close={(editedProduct) => onCloseProductModal(editedProduct)}/>
+      <ProductCreate editProduct={editProduct} open={editProduct} close={({editedProduct}) => onCloseProductModal(editedProduct)}/>
       {menus.data.map((menu) => (
         <div key={menu.menu_id}>
           <div className="d-flex align-items-center justify-content-between mb-2 mt-sm-0 mt-3">

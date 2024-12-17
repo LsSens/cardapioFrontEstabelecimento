@@ -73,7 +73,7 @@ const ProductGrid = () => {
 
   return (
     <Fragment>
-      <ProductCreate editProduct={editProduct} open={editProduct} close={(editedProduct) => onCloseProductModal(editedProduct)}/>
+      <ProductCreate editProduct={editProduct} open={editProduct} close={({editedProduct}) => onCloseProductModal(editedProduct)}/>
       <div className="col-xl-12">
         <h2>Produtos</h2>
         <div className="d-flex align-items-center justify-content-between mb-4 flex-wrap">
