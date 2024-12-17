@@ -15,7 +15,13 @@ const FavoriteMenu = () => {
   const requestInProgress = useRef(false);
   const { id } = useParams();
 
-  const handleOpenProductsModal = () => setOpenProductsModal(!openProductsModal)
+  const handleOpenProductsModal = (editedProduct) => {
+    if(editedProduct){
+
+    }
+
+    setOpenProductsModal(!openProductsModal)
+  }
 
   const getProductsById = async () => {
     setLoading(true);
@@ -37,12 +43,12 @@ const FavoriteMenu = () => {
 
   return (
     <>
-      <ProductsModal open={openProductsModal} close={() => handleOpenProductsModal()}></ProductsModal>
+      <ProductsModal open={openProductsModal} close={(editedProduct) => handleOpenProductsModal(editedProduct)}></ProductsModal>
       <Tab.Container defaultActiveKey="Grid">
         <div className="d-flex align-items-center justify-content-between">
           <div className="d-flex align-items-center justify-content-between mb-0">
             <h3 className="mb-0">{menuItems?.menu_name}</h3>
-            <h3>{menuItems?.menu_image}</h3>
+            <h3>{menuItems?.menu_image && <img src={menuItems?.menu_image} alt="Preview" />}</h3>
           </div>
           <div className="d-flex gap-2">
             <Link

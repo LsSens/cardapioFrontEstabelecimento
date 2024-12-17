@@ -21,12 +21,20 @@ const MenuPopularSlider = ({ menus, changePage }) => {
   const handleEditProduct = (product) => {
     setEditProduct(product)
   }
+  
+  const onCloseProductModal = (editedProduct) => {
+    if(editedProduct){
+      changePage(1)
+    }
+
+    setEditProduct(null)
+  }
 
   if(!menus.data) return <></>
 
   return (
     <>
-      <ProductCreate editProduct={editProduct} open={editProduct} close={() => setEditProduct(null)}/>
+      <ProductCreate editProduct={editProduct} open={editProduct} close={(editedProduct) => onCloseProductModal(editedProduct)}/>
       {menus.data.map((menu) => (
         <div key={menu.menu_id}>
           <div className="d-flex align-items-center justify-content-between mb-2 mt-sm-0 mt-3">
@@ -164,7 +172,6 @@ const MenuPopularSlider = ({ menus, changePage }) => {
                             </Dropdown.Toggle>
                             <Dropdown.Menu align="end">
                               <Dropdown.Item onClick={() => handleEditProduct(item)}>Editar</Dropdown.Item>
-                              {/* <Dropdown.Item onClick={() => deleteProduct(item)}>Deletar</Dropdown.Item> */}
                             </Dropdown.Menu>
                           </Dropdown>
                         </div>
