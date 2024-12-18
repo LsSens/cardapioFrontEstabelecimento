@@ -3,10 +3,11 @@ import { Link, useParams } from "react-router-dom";
 import { Tab, Button, Dropdown } from "react-bootstrap";
 
 import MenuList from "./Favorite/MenuList";
-import { getMenuItemsById } from "./../../../services/MenuService";
+import { deleteItemFromMenu, getMenuItemsById } from "./../../../services/MenuService";
 import Skeleton from "react-loading-skeleton";
 import { useRef } from "react";
 import { ProductsModal } from "./ProductsModal";
+import Swal from "sweetalert2";
 
 const FavoriteMenu = () => {
   const [menuItems, setMenuItems] = useState({ items: [] });
@@ -15,24 +16,20 @@ const FavoriteMenu = () => {
   const requestInProgress = useRef(false);
   const { id } = useParams();
 
-  const handleOpenProductsModal = (editedProduct) => {
-    if(editedProduct){
-
+  const handleOpenProductsModal = (event) => {
+    if(event?.editedCategory){
+      getProductsById()
     }
 
     setOpenProductsModal(!openProductsModal)
   }
 
   const unlinkProduct = async (item) => {
-    console.log(`unlinkProduct ~ item:`, item)
-    // await getMenuItemsById(id)
-    //   .then((response) => {
-    //     setMenuItems({ items: response.data.items, ...response.data });
-    //   })
-    //   .finally(() => {
-    //     setLoading(false);
-    //     requestInProgress.current = false;
-    //   });
+    await deleteItemFromMenu(id, item.item_id)
+      .then(() => {
+        getProductsById()
+        Swal.fire("Sucesso.", "O produto foi desvinculado com sucesso.", "success");
+      })
   }
 
   const getProductsById = async () => {
@@ -55,7 +52,7 @@ const FavoriteMenu = () => {
 
   return (
     <>
-      <ProductsModal open={openProductsModal} close={(editedProduct) => handleOpenProductsModal(editedProduct)} menuId={id}></ProductsModal>
+      <ProductsModal open={openProductsModal} close={(event) => handleOpenProductsModal(event)} menuId={id}></ProductsModal>
       <Tab.Container defaultActiveKey="Grid">
         <div className="d-flex align-items-center justify-content-between">
           <div className="d-flex align-items-center justify-content-between mb-0 gap-2">
@@ -213,43 +210,6 @@ const FavoriteMenu = () => {
                     </div>
                   </React.Fragment>
                 ))}
-                <div className="d-flex align-items-center justify-content-xl-between justify-content-center flex-wrap pagination-bx">
-                  <div className="mb-sm-0 mb-3 pagination-title">
-                    <p className="mb-0">
-                      <span>Mostrando 1-5</span> de <span>100</span> produtos
-                    </p>
-                  </div>
-                  <nav>
-                    <ul className="pagination pagination-gutter">
-                      <li className="page-item page-indicator">
-                        <Link to={"#"} className="page-link">
-                          <i className="la la-angle-left"></i>
-                        </Link>
-                      </li>
-                      <li className="page-item active">
-                        <Link to={"#"} className="page-link">
-                          1
-                        </Link>
-                      </li>
-                      <li className="page-item">
-                        <Link to={"#"} className="page-link">
-                          2
-                        </Link>
-                      </li>
-
-                      <li className="page-item">
-                        <Link to={"#"} className="page-link">
-                          3
-                        </Link>
-                      </li>
-                      <li className="page-item page-indicator">
-                        <Link to={"#"} className="page-link">
-                          <i className="la la-angle-right"></i>
-                        </Link>
-                      </li>
-                    </ul>
-                  </nav>
-                </div>
               </div>
             ) : (
               !loading && (

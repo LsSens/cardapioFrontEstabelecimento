@@ -73,7 +73,7 @@ export const ProductCreate = ({ open, close, editProduct }) => {
   return (
     <Modal className="fade bd-example-modal-lg" show={open} size="lg">
       <Modal.Header>
-        <Modal.Title>Novo produto</Modal.Title>
+        <Modal.Title>{editProduct ? 'Editar produto' : 'Novo produto'}</Modal.Title>
         <Button variant="" className="btn-close" onClick={close}></Button>
       </Modal.Header>
       <Modal.Body>

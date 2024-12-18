@@ -74,7 +74,7 @@ const Markup = () => {
     //{ url: "post-details", component: <PostDetails /> },
 
   /// Shop
-   // { url: "ecom-product-grid", component: <ProductGrid /> },
+   // { url: "ecom-product-grid", component: <ProductsPage /> },
    // { url: "ecom-product-list", component: <ProductList /> },
    // { url: "ecom-product-detail", component: <ProductDetail /> },
    // { url: "ecom-product-order", component: <ProductOrder /> },

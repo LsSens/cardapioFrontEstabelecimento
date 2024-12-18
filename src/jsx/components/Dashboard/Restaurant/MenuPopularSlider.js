@@ -6,7 +6,7 @@ import { Autoplay } from "swiper";
 import "swiper/css";
 import { useDispatch } from "react-redux";
 import { redirectToMenuAction } from "../../../../store/actions/MenuActions";
-import { ProductCreate } from "../../AppsMenu/Shop/ProductGrid/ProductCreate";
+import { ProductCreate } from "../../AppsMenu/Shop/ProductsPage/ProductCreate";
 
 const MenuPopularSlider = ({ menus, changePage }) => {
   const dispatch = useDispatch();
@@ -135,7 +135,7 @@ const MenuPopularSlider = ({ menus, changePage }) => {
                               </p>
                             </div>
                           </div>
-                          <Dropdown className="dropdown ms-auto">
+                          <Dropdown className="dropdown ms-auto" style={{zIndex: 999}}>
                             <Dropdown.Toggle
                               as="div"
                               className="btn-link i-false"
@@ -170,7 +170,7 @@ const MenuPopularSlider = ({ menus, changePage }) => {
                                 />
                               </svg>
                             </Dropdown.Toggle>
-                            <Dropdown.Menu align="end">
+                            <Dropdown.Menu align="end" style={{right: 0}}>
                               <Dropdown.Item onClick={() => handleEditProduct(item)}>Editar</Dropdown.Item>
                             </Dropdown.Menu>
                           </Dropdown>
@@ -210,6 +210,11 @@ const MenuPopularSlider = ({ menus, changePage }) => {
                 </Link>
               </li>
             ))}
+            <li className="page-item page-indicator">
+              <Link to={"#"} className="page-link">
+                <i className="la la-angle-right"></i>
+              </Link>
+            </li>
           </ul>
         </nav>
       </div>
