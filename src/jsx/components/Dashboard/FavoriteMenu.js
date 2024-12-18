@@ -1,12 +1,13 @@
 import React, { useEffect, useState } from "react";
 import { Link, useParams } from "react-router-dom";
-import { Tab, Button } from "react-bootstrap";
+import { Tab, Button, Dropdown } from "react-bootstrap";
 
 import MenuList from "./Favorite/MenuList";
-import { getMenuItemsById } from "./../../../services/MenuService";
+import { deleteItemFromMenu, getMenuItemsById } from "./../../../services/MenuService";
 import Skeleton from "react-loading-skeleton";
 import { useRef } from "react";
 import { ProductsModal } from "./ProductsModal";
+import Swal from "sweetalert2";
 
 const FavoriteMenu = () => {
   const [menuItems, setMenuItems] = useState({ items: [] });
@@ -15,7 +16,21 @@ const FavoriteMenu = () => {
   const requestInProgress = useRef(false);
   const { id } = useParams();
 
-  const handleOpenProductsModal = () => setOpenProductsModal(!openProductsModal)
+  const handleOpenProductsModal = (event) => {
+    if(event?.editedCategory){
+      getProductsById()
+    }
+
+    setOpenProductsModal(!openProductsModal)
+  }
+
+  const unlinkProduct = async (item) => {
+    await deleteItemFromMenu(id, item.item_id)
+      .then(() => {
+        getProductsById()
+        Swal.fire("Sucesso.", "O produto foi desvinculado com sucesso.", "success");
+      })
+  }
 
   const getProductsById = async () => {
     setLoading(true);
@@ -37,12 +52,12 @@ const FavoriteMenu = () => {
 
   return (
     <>
-      <ProductsModal open={openProductsModal} close={() => handleOpenProductsModal()}></ProductsModal>
+      <ProductsModal open={openProductsModal} close={(event) => handleOpenProductsModal(event)} menuId={id}></ProductsModal>
       <Tab.Container defaultActiveKey="Grid">
         <div className="d-flex align-items-center justify-content-between">
-          <div className="d-flex align-items-center justify-content-between mb-0">
+          <div className="d-flex align-items-center justify-content-between mb-0 gap-2">
+            <h3>{menuItems?.menu_image && <img width={80} src={menuItems?.menu_image} alt="Preview" />}</h3> <br/>
             <h3 className="mb-0">{menuItems?.menu_name}</h3>
-            <h3>{menuItems?.menu_image}</h3>
           </div>
           <div className="d-flex gap-2">
             <Link
@@ -107,11 +122,50 @@ const FavoriteMenu = () => {
                     <div className="col-xl-3 col-xxl-3 col-sm-6" key={ind}>
                       <div className="card dishe-bx b-hover style-1">
                         <div className="card-body pb-0 pt-3">
+                          <Dropdown className="dropdown ms-auto" style={{textAlign: 'right'}}>
+                            <Dropdown.Toggle
+                              as="div"
+                              className="btn-link i-false"
+                            >
+                              <svg
+                                width="24"
+                                height="24"
+                                viewBox="0 0 24 24"
+                                fill="none"
+                                xmlns="http://www.w3.org/2000/svg"
+                              >
+                                <path
+                                  d="M11 12C11 12.5523 11.4477 13 12 13C12.5523 13 13 12.5523 13 12C13 11.4477 12.5523 11 12 11C11.4477 11 11 11.4477 11 12Z"
+                                  stroke="#262626"
+                                  strokeWidth="2"
+                                  strokeLinecap="round"
+                                  strokeLinejoin="round"
+                                />
+                                <path
+                                  d="M18 12C18 12.5523 18.4477 13 19 13C19.5523 13 20 12.5523 20 12C20 11.4477 19.5523 11 19 11C18.4477 11 18 11.4477 18 12Z"
+                                  stroke="#262626"
+                                  strokeWidth="2"
+                                  strokeLinecap="round"
+                                  strokeLinejoin="round"
+                                />
+                                <path
+                                  d="M4 12C4 12.5523 4.44772 13 5 13C5.55228 13 6 12.5523 6 12C6 11.4477 5.55228 11 5 11C4.44772 11 4 11.4477 4 12Z"
+                                  stroke="#262626"
+                                  strokeWidth="2"
+                                  strokeLinecap="round"
+                                  strokeLinejoin="round"
+                                />
+                              </svg>
+                            </Dropdown.Toggle>
+                            <Dropdown.Menu align="end">
+                              <Dropdown.Item onClick={() => unlinkProduct(item)}>Desvincular produto</Dropdown.Item>
+                            </Dropdown.Menu>
+                          </Dropdown>
                           <div className="text-center mb-2">
-                            {item.image ? (
+                            {item.item_image ? (
                               <img
                                 className="text-truncate"
-                                src={item.image}
+                                src={item.item_image}
                                 alt={item.name}
                                 style={{
                                   width: "60px",
@@ -156,43 +210,6 @@ const FavoriteMenu = () => {
                     </div>
                   </React.Fragment>
                 ))}
-                <div className="d-flex align-items-center justify-content-xl-between justify-content-center flex-wrap pagination-bx">
-                  <div className="mb-sm-0 mb-3 pagination-title">
-                    <p className="mb-0">
-                      <span>Mostrando 1-5</span> de <span>100</span> produtos
-                    </p>
-                  </div>
-                  <nav>
-                    <ul className="pagination pagination-gutter">
-                      <li className="page-item page-indicator">
-                        <Link to={"#"} className="page-link">
-                          <i className="la la-angle-left"></i>
-                        </Link>
-                      </li>
-                      <li className="page-item active">
-                        <Link to={"#"} className="page-link">
-                          1
-                        </Link>
-                      </li>
-                      <li className="page-item">
-                        <Link to={"#"} className="page-link">
-                          2
-                        </Link>
-                      </li>
-
-                      <li className="page-item">
-                        <Link to={"#"} className="page-link">
-                          3
-                        </Link>
-                      </li>
-                      <li className="page-item page-indicator">
-                        <Link to={"#"} className="page-link">
-                          <i className="la la-angle-right"></i>
-                        </Link>
-                      </li>
-                    </ul>
-                  </nav>
-                </div>
               </div>
             ) : (
               !loading && (

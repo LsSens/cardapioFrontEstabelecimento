@@ -58,9 +58,8 @@ import Calendar from "./components/AppsMenu/Calendar/Calendar";
 import PostDetails from "./components/AppsMenu/AppProfile/PostDetails";
 
 /// Product List
-import ProductGrid from "./components/AppsMenu/Shop/ProductGrid/ProductGrid";
+import ProductsPage from "./components/AppsMenu/Shop/ProductsPage/ProductsPage";
 import ProductList from "./components/AppsMenu/Shop/ProductList/ProductList";
-import ProductDetail from "./components/AppsMenu/Shop/ProductGrid/ProductDetail";
 import Checkout from "./components/AppsMenu/Shop/Checkout/Checkout";
 import Invoice from "./components/AppsMenu/Shop/Invoice/Invoice";
 import ProductOrder from "./components/AppsMenu/Shop/ProductOrder";
@@ -122,6 +121,7 @@ import Error404 from "./pages/Error404";
 import Error500 from "./pages/Error500";
 import Error503 from "./pages/Error503";
 import { ThemeContext } from "../context/ThemeContext";
+import OrdersCreate from "./components/Dashboard/Restaurant/OrdersCreate";
 
 
 
@@ -146,6 +146,7 @@ const Markup = () => {
     // { url: "withdrow", component: <Withdrow /> },
     { url: "menu", component: <Menu /> },
     { url: "orders", component: <Orders /> },
+    { url: "orders/create", component: <OrdersCreate /> },
     // { url: "customer-reviews", component: <CustomerReviews /> },
     
 
@@ -172,7 +173,7 @@ const Markup = () => {
     // { url: "post-details", component: <PostDetails /> },
 
   /// Shop
-    { url: "products", component: <ProductGrid /> },
+    { url: "products", component: <ProductsPage /> },
     // { url: "ecom-product-list", component: <ProductList /> },
     // { url: "ecom-product-detail", component: <ProductDetail /> },
     // { url: "ecom-product-order", component: <ProductOrder /> },
