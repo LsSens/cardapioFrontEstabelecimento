@@ -121,6 +121,7 @@ import Error404 from "./pages/Error404";
 import Error500 from "./pages/Error500";
 import Error503 from "./pages/Error503";
 import { ThemeContext } from "../context/ThemeContext";
+import OrdersCreate from "./components/Dashboard/Restaurant/OrdersCreate";
 
 
 
@@ -145,6 +146,7 @@ const Markup = () => {
     // { url: "withdrow", component: <Withdrow /> },
     { url: "menu", component: <Menu /> },
     { url: "orders", component: <Orders /> },
+    { url: "orders/create", component: <OrdersCreate /> },
     // { url: "customer-reviews", component: <CustomerReviews /> },
     
 
