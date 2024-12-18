@@ -5,6 +5,7 @@ import Skeleton from "react-loading-skeleton";
 import { putItemsIntoMenu } from "../../../services/MenuService";
 import Swal from "sweetalert2";
 import { SpinnerLoader } from './../bootstrap/SpinnerLoader';
+import { Link } from "react-router-dom";
 
 export const ProductsModal = ({ open, close, menuId }) => {
   const [selectedItems, setSelectedItems] = useState([]);
@@ -13,11 +14,11 @@ export const ProductsModal = ({ open, close, menuId }) => {
   const [loadingSpinner, setLoadingSpinner] = useState(false);
   const hasFetched = React.useRef(false);
   
-  const getProducts = () => {
+  const getProducts = (page) => {
     setLoading(true);
     const fetchData = async () => {
-      await getItems().then(async (response) => {
-        setItems(response.data.data);
+      await getItems({menuId, page}).then(async (response) => {
+        setItems(response.data);
       });
       setLoading(false);
     };
@@ -82,7 +83,8 @@ export const ProductsModal = ({ open, close, menuId }) => {
       <Modal.Body>
         {loading ? <LoadingSkeleton/> : 
           <div className="row">
-            {items.map((item, ind) => (
+            {!items?.data?.length && <h4>Não há produtos disponíveis para vincular.</h4>}
+            {items?.data?.map((item, ind) => (
               <React.Fragment key={ind}>
                 <div className="col-xl-3 col-xxl-3 col-sm-6 cursor-pointer" key={ind} onClick={() => handleItemClick(item)}>
                   <div className="card dishe-bx b-hover style-1">
@@ -137,10 +139,38 @@ export const ProductsModal = ({ open, close, menuId }) => {
         }
       </Modal.Body>
       <Modal.Footer>
+      <div className="d-flex align-items-center justify-content-xl-between justify-content-center flex-wrap pagination-bx" style={{marginRight: 'auto'}}>
+        <div className="mb-sm-0 mb-3 pagination-title">
+          <p className="mb-0">
+            <span>Mostrando {items?.data?.length}</span> de <span>{items?.totalItems}</span> produtos
+          </p>
+        </div>
+        <nav>
+          <ul className="pagination pagination-gutter">
+            <li className="page-item page-indicator">
+              <Link to={"#"} className="page-link" onClick={() => getProducts(items?.currentPage - 1)} style={items?.currentPage === 1 ? { pointerEvents: 'none', opacity: 0.5} : {}}>
+                <i className="la la-angle-left"></i>
+              </Link>
+            </li>
+            {Array.of(...Array(items?.totalPages)).map((_, index) => (
+              <li className={items?.currentPage === index + 1 ? "page-item active" : "page-item"}>
+                <Link to={"#"} className="page-link" onClick={() => getProducts(index + 1)}>
+                  {index + 1}
+                </Link>
+              </li>
+            ))}
+            <li className="page-item page-indicator">
+              <Link to={"#"} className="page-link" onClick={() => getProducts(items?.currentPage + 1)} style={items?.currentPage === items?.totalPages ? { pointerEvents: 'none', opacity: 0.5} : {}}>
+                <i className="la la-angle-right"></i>
+              </Link>
+            </li>
+          </ul>
+        </nav>
+      </div>
         <Button variant="danger light" onClick={close}>
           Fechar
         </Button>
-        <Button variant="" type="button" className="btn btn-primary" onClick={() => saveProductsIntoCategory()}>
+        <Button variant="" type="button" disabled={!items?.data?.length} className="btn btn-primary" onClick={() => saveProductsIntoCategory()}>
           Salvar
         </Button>
       </Modal.Footer>
