@@ -9,6 +9,8 @@ import { ProductCreate } from "./ProductCreate";
 
 const ProductsPage = () => {
   const [items, setItems] = useState(null);
+const ProductGrid = () => {
+  const [items, setItems] = useState(null);
   const [loading, setLoading] = useState(false);
   const [openProductCreate, setOpenProductCreate] = useState(false);
   const hasFetched = React.useRef(false);
@@ -21,8 +23,11 @@ const ProductsPage = () => {
   const handleAddProduct = () => setOpenProductCreate(true)
 
   const getProducts = (page) => {
+  const getProducts = (page) => {
     setLoading(true);
     const fetchData = async () => {
+    await getItems({page}).then(async (response) => {
+        setItems(response.data);
     await getItems({page}).then(async (response) => {
         setItems(response.data);
       });
@@ -47,7 +52,14 @@ const ProductsPage = () => {
             className="col-6 col-md-4 col-lg-3 mb-4 d-flex justify-content-center"
           >
             <Skeleton height={200} width={250} />
+        {Array.of(...Array(10)).map((_, index) => (
+          <div
+            key={index}
+            className="col-6 col-md-4 col-lg-3 mb-4 d-flex justify-content-center"
+          >
+            <Skeleton height={200} width={250} />
           </div>
+        ))}
         ))}
       </div>
     );
@@ -104,6 +116,34 @@ const ProductsPage = () => {
         {items?.data?.map((product) => (
           <Products handleEditProduct={() => handleEditProduct(product)} key={product.key} product={product} />
         ))}
+      </div>
+      <div className="d-flex align-items-center justify-content-xl-between justify-content-center flex-wrap pagination-bx">
+        <div className="mb-sm-0 mb-3 pagination-title">
+          <p className="mb-0">
+            <span>Mostrando {items?.data?.length}</span> de <span>{items?.totalItems}</span> produtos
+          </p>
+        </div>
+        <nav>
+          <ul className="pagination pagination-gutter">
+            <li className="page-item page-indicator">
+              <Link to={"#"} className="page-link" onClick={() => getProducts(items?.currentPage - 1)} style={items?.currentPage === 1 ? { pointerEvents: 'none', opacity: 0.5} : {}}>
+                <i className="la la-angle-left"></i>
+              </Link>
+            </li>
+            {Array.of(...Array(items?.totalPages)).map((_, index) => (
+              <li className={items?.currentPage === index + 1 ? "page-item active" : "page-item"}>
+                <Link to={"#"} className="page-link" onClick={() => getProducts(index + 1)}>
+                  {index + 1}
+                </Link>
+              </li>
+            ))}
+            <li className="page-item page-indicator">
+              <Link to={"#"} className="page-link" onClick={() => getProducts(items?.currentPage + 1)} style={items?.currentPage === items?.totalPages ? { pointerEvents: 'none', opacity: 0.5} : {}}>
+                <i className="la la-angle-right"></i>
+              </Link>
+            </li>
+          </ul>
+        </nav>
       </div>
       <div className="d-flex align-items-center justify-content-xl-between justify-content-center flex-wrap pagination-bx">
         <div className="mb-sm-0 mb-3 pagination-title">
