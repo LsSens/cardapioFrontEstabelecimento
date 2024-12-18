@@ -39,13 +39,13 @@ function Restaurant() {
                                     <div className="row">
                                         <div className="col-xl-4 col-lg-4 col-6">
                                             <div className="line position-relative">
-                                                <p className="font-w500 mb-0">Total Income oi</p>
-                                                <h2 className="mb-0 text-primary">$12,890,00</h2>
+                                                <p className="font-w500 mb-0">Seu saldo</p>
+                                                <h2 className="mb-0 text-primary">R$ 12.890,30</h2>
                                             </div>
                                         </div>
                                         <div className="col-xl-3 col-lg-3 col-6">
-                                            <p className="font-w500 text-success mb-0">Income</p>
-                                            <h4 className="cate-title data">$4345,00</h4>
+                                            <p className="font-w500 text-success mb-0">Renda</p>
+                                            <h4 className="cate-title data">R$ 4345</h4>
                                             <ul className="d-flex align-items-center">
                                                 <li><svg width="18" height="18" viewBox="0 0 18 18" fill="none" xmlns="http://www.w3.org/2000/svg">
                                                     <g clipPath="url(#clip0_1055_214)">
@@ -62,8 +62,8 @@ function Restaurant() {
                                             </ul>
                                         </div>
                                         <div className="col-xl-2 col-lg-2 col-6">
-                                            <p className="font-w500 text-danger mb-0">Expense</p>
-                                            <h4 className="cate-title data">$2890,00</h4>
+                                            <p className="font-w500 text-danger mb-0">Despesas</p>
+                                            <h4 className="cate-title data">R$2890</h4>
                                             <ul className="d-flex align-items-center">
                                                 <li><svg width="18" height="18" viewBox="0 0 18 18" fill="none" xmlns="http://www.w3.org/2000/svg">
                                                     <g clipPath="url(#clip0_1055_221)">
@@ -81,7 +81,7 @@ function Restaurant() {
                                         </div>
                                         <div className="col-xl-3 align-self-center col-lg-3 col-3">
                                             <div className="text-end text-sm-start text-xl-end text-nowrap">
-                                                <Link to={"withdrow"} className="btn btn-primary">Withdraw <svg className="ms-2" width="10" height="18" viewBox="0 0 11 18" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                                <Link to={"withdrow"} className="btn btn-primary">Sacar <svg className="ms-2" width="10" height="18" viewBox="0 0 11 18" fill="none" xmlns="http://www.w3.org/2000/svg">
                                                     <path d="M5.8 7.9C3.53 7.31 2.8 6.7 2.8 5.75C2.8 4.66 3.81 3.9 5.5 3.9C6.92 3.9 7.63 4.44 7.89 5.3C8.01 5.7 8.34 6 8.76 6H9.06C9.72 6 10.19 5.35 9.96 4.73C9.54 3.55 8.56 2.57 7 2.19V1.5C7 0.67 6.33 0 5.5 0C4.67 0 4 0.67 4 1.5V2.16C2.06 2.58 0.5 3.84 0.5 5.77C0.5 8.08 2.41 9.23 5.2 9.9C7.7 10.5 8.2 11.38 8.2 12.31C8.2 13 7.71 14.1 5.5 14.1C3.85 14.1 3 13.51 2.67 12.67C2.52 12.28 2.18 12 1.77 12H1.49C0.82 12 0.35 12.68 0.6 13.3C1.17 14.69 2.5 15.51 4 15.83V16.5C4 17.33 4.67 18 5.5 18C6.33 18 7 17.33 7 16.5V15.85C8.95 15.48 10.5 14.35 10.5 12.3C10.5 9.46 8.07 8.49 5.8 7.9Z" fill="white" />
                                                 </svg>
                                                 </Link>

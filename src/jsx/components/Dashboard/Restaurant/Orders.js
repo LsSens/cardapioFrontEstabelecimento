@@ -98,41 +98,41 @@ const Orders = () => {
 
   return (
     <>
-    <div className="col-xl-12">
-      <h2>Pedidos</h2>
-      <div className="d-flex align-items-center justify-content-between mb-4 flex-wrap">
-        <div className="input-group search-area2">
-          <span className="input-group-text p-0">
-            <Link to={"#"}>
-              <svg
-                width="32"
-                height="32"
-                viewBox="0 0 32 32"
-                fill="none"
-                xmlns="http://www.w3.org/2000/svg"
-              >
-                <path
-                  d="M27.414 24.586L22.337 19.509C23.386 17.928 24 16.035 24 14C24 8.486 19.514 4 14 4C8.486 4 4 8.486 4 14C4 19.514 8.486 24 14 24C16.035 24 17.928 23.386 19.509 22.337L24.586 27.414C25.366 28.195 26.634 28.195 27.414 27.414C28.195 26.633 28.195 25.367 27.414 24.586ZM7 14C7 10.14 10.14 7 14 7C17.86 7 21 10.14 21 14C21 17.86 17.86 21 14 21C10.14 21 7 17.86 7 14Z"
-                  fill="#FC8019"
-                />
-              </svg>
-            </Link>
-          </span>
-          <input
-            type="text"
-            className="form-control p-0"
-            placeholder="Procurar"
-          />
+      <div className="col-xl-12">
+        <h2>Pedidos</h2>
+        <div className="d-flex align-items-center justify-content-between mb-4 flex-wrap">
+          <div className="input-group search-area2">
+            <span className="input-group-text p-0">
+              <Link to={"#"}>
+                <svg
+                  width="32"
+                  height="32"
+                  viewBox="0 0 32 32"
+                  fill="none"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <path
+                    d="M27.414 24.586L22.337 19.509C23.386 17.928 24 16.035 24 14C24 8.486 19.514 4 14 4C8.486 4 4 8.486 4 14C4 19.514 8.486 24 14 24C16.035 24 17.928 23.386 19.509 22.337L24.586 27.414C25.366 28.195 26.634 28.195 27.414 27.414C28.195 26.633 28.195 25.367 27.414 24.586ZM7 14C7 10.14 10.14 7 14 7C17.86 7 21 10.14 21 14C21 17.86 17.86 21 14 21C10.14 21 7 17.86 7 14Z"
+                    fill="#FC8019"
+                  />
+                </svg>
+              </Link>
+            </span>
+            <input
+              type="text"
+              className="form-control p-0"
+              placeholder="Procurar"
+            />
+          </div>
+          <button
+            type="button"
+            className="btn btn-primary mt-3 mt-sm-0"
+            onClick={() => navigate('create')}
+          >
+            Novo pedido
+          </button>
         </div>
-        <button
-          type="button"
-          className="btn btn-primary mt-3 mt-sm-0"
-          onClick={() => navigate('create')}
-        >
-          Novo pedido
-        </button>
       </div>
-    </div>
       <div className="row">
         <div className="col-xl-5">
           <div className="card">
@@ -146,7 +146,10 @@ const Orders = () => {
                     <Nav.Link eventKey="PREPARING" id="nav-prepared-tab">
                       Preparando
                     </Nav.Link>
-                    <Nav.Link eventKey="Delivered" id="nav-delivered-tab">
+                    <Nav.Link eventKey="ONWAY" id="nav-onWay-tab">
+                      A caminho
+                    </Nav.Link>
+                    <Nav.Link eventKey="DELIVERED" id="nav-delivered-tab">
                       Entregue
                     </Nav.Link>
                   </Nav>
@@ -164,12 +167,18 @@ const Orders = () => {
                         {orders?.data?.filter((order) => order.status === status)
                           .map((order, ind) => (
                             <div
-                              className={`orderin-bx d-flex align-items-center justify-content-between ${selectedOrder?.id === order.id ? "selected-order" : ""
+                              className={`orderin-bx position-relative d-flex align-items-center justify-content-between ${selectedOrder?.id === order.id ? "selected-order" : ""
                                 }`}
                               key={ind}
                               onClick={() => handleSelectOrder(order)}
                               style={{ cursor: "pointer" }}
                             >
+                              {order.ifood_id ? (
+                                <div className="position-absolute top-0 p-1 d-flex align-items-center gap-2" style={{ right: 0 }}>
+                                  <p className="m-0"># {order.ifood_id}</p>
+                                  <img src="https://logopng.com.br/logos/ifood-43.png" alt="Bootstrap logo" width="50"></img>
+                                </div>
+                              ) : null}
                               <div>
                                 <h4>Pedido #{order.id}</h4>
                                 <span>{formatToBrasiliaTime(order.createdAt)}</span>
@@ -224,6 +233,12 @@ const Orders = () => {
                         <h4 className="cate-title mb-sm-3 mb-2 mt-xl-0 mt-3">
                           Detalhes do pedido
                         </h4>
+                        {selectedOrder.ifood_id ? (
+                          <div className="position-absolute top-0 p-1 d-flex align-items-center gap-2" style={{ right: 0 }}>
+                            <p className="m-0"># {selectedOrder.ifood_id}</p>
+                            <img src="https://logopng.com.br/logos/ifood-43.png" alt="Bootstrap logo" width="50"></img>
+                          </div>
+                        ) : null}
                         <h4 className="cate-title mb-sm-3 mb-2 mt-xl-0 mt-3">
                           {selectedOrder.status}
                         </h4>
@@ -308,40 +323,40 @@ const Orders = () => {
                     )}
                   </div>
                 </>
-                ) : 
+              ) :
                 <div className="card h-auto">
-                    <div className="card-body">
-                      <div className="d-flex justify-content-between">
-                        <h4 className="cate-title mb-sm-3 mb-2 mt-xl-0 mt-3">
-                          Detalhes do pedido
-                        </h4>
-                      </div>
-                      <div className="d-flex align-items-center justify-content-between border-bottom flex-wrap">
-                        <div className="mb-4">
-                          <Skeleton height={30} width={100} />
-                        </div>
-                        <div className="orders-img d-flex mb-4">
-                          <Skeleton height={30} width={100} />
-                        </div>
-                        <div className="orders-img d-flex mb-4">
-                          <Skeleton height={30} width={100} />
-                        </div>
-                      </div>
-                      <div className="order-menu style-1 mt-3">
-                        <h4>Itens do pedido</h4>
-                        <Skeleton height={30} width={'100%'} />
-                        <Skeleton height={30} width={'100%'} />
-                        <Skeleton height={30} width={'100%'} />
-                        <Skeleton height={30} width={'100%'} />
-                      </div>
-                      <hr style={{ opacity: "0.7" }} />
-                      <div className="d-flex align-items-center justify-content-between">
-                        <h4 className="font-w500 mb-0">Total</h4>
-                        <h4 className="cate-title text-primary">
+                  <div className="card-body">
+                    <div className="d-flex justify-content-between">
+                      <h4 className="cate-title mb-sm-3 mb-2 mt-xl-0 mt-3">
+                        Detalhes do pedido
+                      </h4>
+                    </div>
+                    <div className="d-flex align-items-center justify-content-between border-bottom flex-wrap">
+                      <div className="mb-4">
                         <Skeleton height={30} width={100} />
-                        </h4>
+                      </div>
+                      <div className="orders-img d-flex mb-4">
+                        <Skeleton height={30} width={100} />
+                      </div>
+                      <div className="orders-img d-flex mb-4">
+                        <Skeleton height={30} width={100} />
                       </div>
                     </div>
+                    <div className="order-menu style-1 mt-3">
+                      <h4>Itens do pedido</h4>
+                      <Skeleton height={30} width={'100%'} />
+                      <Skeleton height={30} width={'100%'} />
+                      <Skeleton height={30} width={'100%'} />
+                      <Skeleton height={30} width={'100%'} />
+                    </div>
+                    <hr style={{ opacity: "0.7" }} />
+                    <div className="d-flex align-items-center justify-content-between">
+                      <h4 className="font-w500 mb-0">Total</h4>
+                      <h4 className="cate-title text-primary">
+                        <Skeleton height={30} width={100} />
+                      </h4>
+                    </div>
+                  </div>
                 </div>
               }
             </div>

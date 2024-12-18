@@ -3,6 +3,7 @@ import PerfectScrollbar from "react-perfect-scrollbar";
 import { getCustomers } from "../../../services/CustomersService";
 import { formatPhoneNumber } from "../../utils/formatPhone";
 import { Link } from "react-router-dom";
+import { formatToBrasiliaTime } from "../../utils/formatTime";
 
 function CustomerBox({ customer, onSelect }) {
   return (
@@ -22,27 +23,6 @@ function CustomerBox({ customer, onSelect }) {
 }
 
 function CustomerDetails({ customer }) {
-  const orders = [
-    {
-      id: 1,
-      date: "08/12/2024 12:45",
-      total: "R$ 150,00",
-      status: "Concluído",
-    },
-    {
-      id: 2,
-      date: "08/12/2024 18:30",
-      total: "R$ 200,00",
-      status: "Cancelado",
-    },
-    {
-      id: 3,
-      date: "08/12/2024 14:15",
-      total: "R$ 350,00",
-      status: "Concluído",
-    },
-  ];
-
   return (
     <div className="customer-details p-4">
       <h3 className="mb-3">{customer.name}</h3>
@@ -69,20 +49,25 @@ function CustomerDetails({ customer }) {
           )}
         </li>
       </ul>
-      <h4 className="mb-3">Pedidos</h4>
+      <div className="d-flex align-items-center justify-content-between">
+        <h4 className="mb-0">Pedidos ({customer.orders.length})</h4>
+        <Link to="#" className="text-primary text-decoration-none">
+          Ver todos os pedidos
+        </Link>
+      </div>
       <ul className="list-group list-group-flush">
-        {orders.map((order) => (
+        {customer.orders.map((order) => (
           <li
             key={order.id}
             className="list-group-item d-flex justify-content-between align-items-center"
           >
             <div>
-              <strong>#{order.id}</strong> - {order.date}
+              <strong>#{order.id}</strong> - {formatToBrasiliaTime(order.createdAt)}
               <br />
               <span>{order.status}</span>
             </div>
             <div className="d-flex flex-column">
-              <strong>{order.total}</strong>
+              <strong>R$ {order.total}</strong>
               <Link to="#" className="text-primary text-decoration-none">
                 Mais detalhes
               </Link>
